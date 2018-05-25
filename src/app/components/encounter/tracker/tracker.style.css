@@ -1,0 +1,11 @@
+.creature{
+    padding-top:2%;
+    width: 170px;
+    height: 220px;
+    background-color: #f4f4e7;
+    margin:1%;
+}
+.selected{
+    border:solid;
+    border-color:red;
+}

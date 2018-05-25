@@ -1,0 +1,91 @@
+<h1>D&D 5e Spellbook</h1>
+
+<p>See all spells</p>
+<hr />
+
+<div *ngIf="loaded == true; else loading">
+    <div *ngFor="let spell of spells">
+        <div class="card" style="margin: 3%; background-color:#e4f9ff">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md">
+                        <h3 class="card-title">{{ spell.name }}</h3>
+                    </div>
+                    <div class="col-md">
+                        <h4 style="float:right">{{spell.page}}</h4>
+                    </div>
+                </div>
+                <h5>
+                    <div *ngIf="spell.level == 'Cantrip'; else noCantrip">
+                        {{ spell.school + " "}}
+                        <h5 *ngIf="spell.concentration == 'yes'">
+                            concentration
+                        </h5>
+                        <h5 *ngIf="spell.ritual == 'yes'">
+                            ritual
+                        </h5>
+                        {{ spell.level }}
+                    </div><ng-template #noCantrip>
+                        {{ spell.level+" "+spell.school + " "}}
+                        <div *ngIf="spell.concentration == 'yes'">
+                            concentration
+                        </div>
+                        <div *ngIf="spell.ritual == 'yes'">
+                            ritual
+                        </div>
+                    </ng-template>
+                </h5>
+                {{ spell.desc }}
+                <br />
+                <i>{{ spell.higher_level }}</i>
+                <br />
+                <hr />
+                <div class="row">
+                    <div class="col-md">
+                        <b>Range</b><br />
+                        {{ spell.range }}
+                    </div>
+                    <div class="col-md">
+                        <b>Components</b><br />
+                        {{ spell.components }}
+                    </div>
+                    <div class="col-md" *ngIf="spell.material != null">
+                        <b>Materials</b><br />
+                        {{ spell.material }}
+                    </div>
+                    <div class="col-md">
+                        <b>Duration</b><br />
+                        {{ spell.duration }}
+                    </div>
+                    <div class="col-md">
+                        <b>Casting time</b><br />
+                        {{ spell.casting_time }}
+                    </div>
+                    <div class="col-md" *ngIf="spell.SPclass != null">
+                        <b>Classes</b><br />
+                        {{ spell.SPclass }}
+                    </div>
+                    <div class="col-md" *ngIf="spell.archetype != null">
+                        <b>Archetype</b><br />
+                        {{ spell.archetype }}
+                    </div>
+                    <div class="col-md" *ngIf="spell.domains != null">
+                        <b>Domains</b><br />
+                        {{ spell.domains }}
+                    </div>
+                    <div class="col-md" *ngIf="spell.circles != null">
+                        <b>Circles</b><br />
+                        {{ spell.circles }}
+                    </div>
+                    <div class="col-md" *ngIf="spell.oaths != null">
+                        <b>Oaths</b><br />
+                        {{ spell.oaths }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <img src="assets/images/loading.gif" width="100" height="100" style="display: block; margin: auto;" />
+</ng-template>

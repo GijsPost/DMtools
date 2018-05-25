@@ -1,0 +1,151 @@
+<h1>D&D 5e Encounter Tracker</h1>
+
+<p>Manage your encounters</p>
+<hr />
+<div *ngIf="turnTracker" style="text-align:center">
+    <div class="row" >
+        <div [ngClass]="['card', turn == ent ? 'selected' : '']" *ngFor="let ent of turnTracker.list" style="margin:1%; padding-left:1%; padding-right:1%;">
+            <h5>{{ent.name}}</h5>
+        </div>
+    </div>
+    <h4>Round {{ round }}, Turn {{ turnNum }}</h4>
+    <h3>{{ turn.name }}'s turn</h3>
+</div>
+<div *ngIf="turnTracker == undefined; else turnswitch" style="text-align:center">
+    <button class="btn btn-primary" (click)="startTracker()">Start</button>
+</div>
+<ng-template #turnswitch>
+    <div style="text-align:center">
+        <button class="btn btn-primary" (click)="nextTurn()">Next turn</button>
+    </div>  
+</ng-template>
+<hr>
+<div class="row">
+    <div class="col-md">
+        <h4>Party & Allies</h4>
+        <div class="row" *ngIf="!turnTracker">
+            <button style="margin:1%;" class="btn btn-primary" (click)="generateRollsAllies('indiv')">Roll for all allies</button>
+            <button style="margin:1%;" class="btn btn-primary" (click)="generateRollsAllies('group')">Roll for allies as group</button>
+        </div>
+        <div class="row"> 
+            <div class="card creature" [ngClass]="['card creature', turn == pc ? 'selected' : '']" *ngFor="let pc of party;" [ngStyle]="{'background':'linear-gradient(#f4f4e7,rgba(224,144,133,' + (1 - pc.health_percentage) + '))'}">
+                <i class="fas fa-user fa-4x" style="text-align: center"></i>
+                <h4 style="text-align: center">{{pc.name}}</h4>
+                <div style="padding-left:20%;">
+                    <i class="fas fa-shield-alt" style="margin-right: 5px;"></i><b> {{pc.armor_class}}</b><br>
+                    <i class="fas fa-heart" style="margin-right: 5px;"></i> <input #hpchange type="number" name="hpchange" id="hpchange" value="{{pc.hit_points}}" (keyup.enter)="setHP(pc, hpchange.value);" style="width:50%;"><br>
+                    <i class="fas fa-sort-amount-up" style="margin-right: 5px;"></i> <input #init *ngIf="turnTracker == undefined; else initLabel" type="number" name="init" id="init-{{ pc.name }}" placeholder="Init" value="{{pc.initiative}}" (keyup.enter)="setInit(pc, init.value)" style="width:50%;">       
+                    <ng-template #initLabel>
+                        {{ pc.initiative }}
+                    </ng-template>
+                </div>
+            </div>
+            <div [ngClass]="['card creature', turn == ally ? 'selected' : '']" *ngFor="let ally of allies" (click)="showMonster(ally)" [ngStyle]="{'background':'linear-gradient(#e9eefb,rgba(224,144,133,' + (1 - ally.health_percentage) + '))'}">
+                <i class="fas fa-user fa-4x" style="text-align: center"></i>
+                <h4 style="text-align: center">{{ally.name}}</h4>
+                <div style="padding-left:20%;">
+                    <i class="fas fa-shield-alt" style="margin-right: 5px;"></i><b> {{ally.armor_class}}</b><br>
+                    <i class="fas fa-heart" style="margin-right: 5px;"></i> <input #hpchange type="number" name="hpchange" id="hpchange" value="{{ally.hit_points}}" (keyup.enter)="setHP(ally, hpchange.value);" style="width:50%;"><br>
+                    <i class="fas fa-sort-amount-up" style="margin-right: 5px;"></i> <input #init *ngIf="turnTracker == undefined; else initLabel" type="number" name="init" id="init-{{ ally.name }}" placeholder="Init" value="{{ally.initiative}}" (keyup.enter)="setInit(ally, init.value)" style="width:50%;">       
+                    <ng-template #initLabel>
+                        {{ ally.initiative }}
+                    </ng-template>         
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">       
+        <h4>Enemies</h4>
+        <div class="row" *ngIf="!turnTracker">
+            <button style="margin:1%;" class="btn btn-primary" (click)="generateRollsEnemies('indiv')">Roll for all enemies</button>
+            <button style="margin:1%;" class="btn btn-primary" (click)="generateRollsEnemies('group')">Roll for enemies as group</button>
+        </div>
+        <div class="row">
+            <div class="card creature"  [ngClass]="['card creature', turn == enemy ? 'selected' : '']" *ngFor="let enemy of enemies" (click)="showMonster(enemy)" [ngStyle]="{'background':'linear-gradient(#c1abab,rgba(224,144,133,' + (1 - enemy.health_percentage) + '))'}">
+                <img src="assets/images/enemyIcon.png" width="70px" height="70px" style="display: block; margin: 0 auto;">
+                <h5 style="text-align: center">{{enemy.name}}</h5>
+                <div style="padding-left:20%;">
+                    <i class="fas fa-shield-alt"></i><b> {{enemy.armor_class}}</b><br>
+                    <i class="fas fa-heart"></i> <input #hpchange type="number" name="hpchange" id="hpchange" value="{{enemy.hit_points}}" (keyup.enter)="setHP(enemy, hpchange.value);" style="width:50%;"><br>
+                    <i class="fas fa-sort-amount-up"></i> <input #init *ngIf="turnTracker == undefined; else initLabel" type="number" name="init" id="init-{{ enemy.name }}" placeholder="Init" value="{{enemy.initiative}}" (keyup.enter)="setInit(enemy, init.value)" style="width:50%;">       
+                    <ng-template #initLabel>
+                        {{ enemy.initiative }}
+                    </ng-template>         
+                </div>
+            </div>
+        </div>     
+    </div>
+</div>
+<hr>
+<div class="card" style="margin: 3%; background-color:#fdfceb" *ngIf="selected != null || selected != undefined">
+    <div class="card-body">
+        <h3 class="card-title">{{ selected.name }}</h3>
+        <h4><i>{{ selected.size + " " + selected.type + " " + selected.subtype }} (CR {{ selected.challenge_rating }})</i> <span *ngIf="selected.challenge_rating >= 10" class='glyphicon glyphicon-star'></span></h4>
+        <p>
+            <span class="badge badge-info">Strength {{ selected.strength + " ( " + (abc.get(selected.strength) > 0 ? '+' : '') + abc.get(selected.strength) + " )" }}</span>
+            <span class="badge badge-info">Dexterity {{ selected.dexterity + " ( " + (abc.get(selected.dexterity) > 0 ? '+' : '') + abc.get(selected.dexterity) + " )" }}</span>
+            <span class="badge badge-info">Constitution {{ selected.constitution + " ( " + (abc.get(selected.constitution)  > 0 ? '+' : '') + abc.get(selected.constitution) + " )"}}</span>
+            <span class="badge badge-info">Wisdom {{ selected.wisdom + " ( " + (abc.get(selected.wisdom) > 0 ? '+' : '') + abc.get(selected.wisdom)  + " )" }}</span>
+            <span class="badge badge-info">Intelligence {{ selected.intelligence + " ( " + (abc.get(selected.intelligence) > 0 ? '+' : '') + abc.get(selected.intelligence) + " )" }}</span>
+            <span class="badge badge-info">Charisma {{ selected.charisma + " ( " + (abc.get(selected.charisma) > 0 ? '+' : '') + abc.get(selected.charisma) +" )" }}</span>
+        </p>
+        <hr />
+        <div class="row">
+            <div class="col-md">
+                <div *ngIf="selected.speed != ''">
+                    <b>Speed</b><br />
+                    {{ selected.speed }}
+                </div>
+                <div *ngIf="selected.senses != ''">
+                    <b>Senses</b><br />
+                    {{ selected.senses }}
+                </div>
+                <div *ngIf="selected.languages != ''">
+                    <b>Languages</b><br />
+                    {{ selected.languages }}
+                </div>
+            </div>
+            <div class="col-md">
+                <div *ngIf="selected.damage_vulnerabilities != ''">
+                    <b>Vulnerabilities: </b><br />
+                    {{ selected.damage_vulnerabilities }}
+                </div>
+                <div *ngIf="selected.damage_resistances != ''">
+                    <b>Resistances: </b>
+                    {{ selected.damage_resistances }}
+                </div>
+                <div *ngIf="selected.damage_immunities != ''">
+                    <b>Immunities: </b>
+                    {{ selected.damage_immunities + ", " + selected.condition_immunities}}
+                </div>
+            </div>
+        </div>
+        <hr />
+        <h4>Special Abilities</h4>
+        <div *ngFor="let abil of selected.special_abilities">
+            <p><b>{{ abil.name }}</b></p>
+            <p>{{ abil.desc }}</p>
+        </div>
+        <hr />
+        <h4>Actions</h4>
+        <div *ngFor="let action of selected.actions">
+            <p><b>{{ action.name }}</b></p>
+            <p>
+                {{ action.desc }}
+                <span class="badge badge-warning" *ngIf="action.attack_bonus != 0">attack +{{ action.attack_bonus }}</span>
+                <span class="badge badge-warning" *ngIf="action.attack_bonus != 0">{{ action.damage_dice }} +{{action.damage_bonus != null ? action.damage_bonus : '0'}}</span>
+            </p>
+
+        </div>
+        <hr />
+        <h4>Legendary Actions</h4>
+        <div *ngFor="let legac of selected.legendary_actions">
+            <p><b>{{ legac.name }}</b></p>
+            <p>{{ legac.desc }}</p>
+        </div>
+    </div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

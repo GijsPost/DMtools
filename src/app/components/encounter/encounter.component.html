@@ -1,0 +1,124 @@
+<h1>D&D 5e Encounter Tracker</h1>
+
+<p>Manage your encounters</p>
+<hr />
+
+<div class="row">
+    <div class="col-md">
+        <h4>Party</h4>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Class & Level</th>
+                    <th>AC</th>
+                    <th>HP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pc of party">
+                    <td>
+                        {{ pc.name }}
+                    </td>
+                    <td>
+                        {{ pc.PCclass + " " + pc.level }}
+                    </td>
+                    <td>
+                        {{ pc.armor_class }}
+                    </td>
+                    <td>
+                        {{ pc.hit_points }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Allies</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>CR</th>
+                    <th>AC</th>
+                    <th>HP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ally of allies">
+                    <td>
+                        {{ ally.name }}
+                    </td>
+                    <td>
+                        {{ ally.challenge_rating }}
+                    </td>
+                    <td>
+                        {{ ally.armor_class }}
+                    </td>
+                    <td>
+                        {{ ally.hit_points }}
+                    </td>
+                </tr>
+                <tr>
+                    <div class="row">
+                        <div class="col-md">
+                            <input #Allyadd type="text" class="form-control" name="Allyadd" id="Allyadd" placeholder="Add Ally" (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1" (keyup)="FindAlly(Allyadd)">
+                            <a role="button" *ngFor="let res of queryResAlly" (click)="Allyadd.value=res.name; addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">{{res.name}}<br /></a>
+                        </div>
+                        <div class="col-md">
+                            <input #Allyamount type="number" class="form-control" name="Allyamount" id="Allyamount" placeholder="Amount" value=1 (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">
+                        </div>
+                        <div class="col-md">
+                            <button type="button" class="btn btn-danger" (click)="resetAllies()">Reset</button>
+                        </div>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+
+        <a role="button" class="btn btn-primary start-button" (click)="encounterCreate()">Start Encounter</a>
+    </div>
+    <div class="col-md">
+        <h4>Enemies</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>CR</th>
+                    <th>AC</th>
+                    <th>HP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let enemy of enemies">
+                    <td>
+                        {{ enemy.name }}
+                    </td>
+                    <td>
+                        {{ enemy.challenge_rating }}
+                    </td>
+                    <td>
+                        {{ enemy.armor_class }}
+                    </td>
+                    <td>
+                        {{ enemy.hit_points }}
+                    </td>
+                </tr>
+                <tr>
+                    <div class="row">
+                        <div class="col-md">
+                            <input #query type="text" class="form-control" name="query" id="query" placeholder="Add enemy" (keyup.enter)="addEnemy(query.value, amount.value); query.value=''; amount.value=1" (keyup)="FindEnem(query)">
+                            <a role="button" *ngFor="let res of queryResMon" (click)="query.value=res.name; addEnemy(query.value, amount.value); query.value=''; amount.value=1" >{{res.name}}<br /></a>
+                        </div>
+                        <div class="col-md">
+                            <input #amount type="number" class="form-control" name="amount" id="amount" placeholder="Amount" value=1 (keyup.enter)="addEnemy(query.value, amount.value); query.value=''; amount.value=1">
+                        </div>
+                        <div class="col-md">
+                            <button type="button" class="btn btn-danger" (click)="resetEnemies()">Reset</button>
+                        </div>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class='main-nav bg-dark'>
+    <div class='navbar navigation'>
+        <div class='navbar-collapse'>
+            <!--<i class="fab fa-d-and-d fa-10x" style="color: #fff; text-align: center; margin-bottom:10%"></i>-->
+            <p>Version {{ version }}</p>
+            <div style="text-align:center">
+                <hr />
+                <h4 class="text-light" >Dice roller</h4>
+                <input class="diceroller-field" type="text" #diceroller (keyup.enter)="roll(diceroller.value)" value="1d20"/>
+                <input readonly class="diceroller-field" type="number" #output id="output" />
+                <hr />
+            </div>
+            <div class='btn-group-vertical buttons'>
+                <button type="button" class="btn btn-light text-dark" [routerLink]="['/home']">Home</button>
+                <button type="button" class="btn btn-light text-dark" [routerLink]="['/parties']">Parties</button>
+                <button type="button" class="btn btn-light text-dark" [routerLink]="['/encounter']">Encounter Tracker</button>
+                <button type="button" class="btn btn-light text-dark" [routerLink]="['/monsters']">Monster List</button>
+                <button type="button" class="btn btn-light text-dark" [routerLink]="['/spells']">Spell List</button>
+            </div>
+        </div>
+    </div>
+</div>
