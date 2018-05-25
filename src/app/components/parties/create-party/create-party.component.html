@@ -1,0 +1,50 @@
+<div class="container">
+    <h1>Create new party</h1>
+    <form (ngSubmit)="submit()" #partyForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name of the party</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="party.party_name" name="name">
+      </div>
+ 
+      <div class="form-group">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th style="width: 30%;">Class & Level</th>
+                      <th>AC</th>
+                      <th>HP</th>
+                  </tr>            
+              </thead>
+              <tbody>
+                  <tr *ngFor="let pc of party.party">
+                      <td><input type="text" class="form-control" id="PCname{{pc.id}}" required [(ngModel)]="pc.name" placeholder="Name" name="PCname{{pc.id}}"></td>
+                      <td class="row">
+                          <div class="col-md">
+                            <input type="text" class="form-control" id="PCclass{{pc.id}}" required [(ngModel)]="pc.PCclass" placeholder="Class" name="PCclass{{pc.id}}">
+                          </div>
+                          <div class="col-md">
+                            <input type="number" class="form-control number" id="PCLevel{{pc.id}}" required [(ngModel)]="pc.level" placeholder="Level" name="PClevel{{pc.id}}">
+                          </div>
+                      </td>
+                      <td><input type="number" class="form-control number" id="PCac{{pc.id}}" required [(ngModel)]="pc.armor_class" placeholder="Armor Class" name="PCac{{pc.id}}"></td>
+                      <td><input type="number" class="form-control number" id="PChp{{pc.id}}" required [(ngModel)]="pc.hit_points" placeholder="Max Hitpoints" name="PChp{{pc.id}}"></td>
+                      <td><i class="fas fa-times-circle fa-2x delete-icon" (click)="removePC(pc)"></i></td>
+                  </tr>
+                  <tr>
+                      <td>
+                        <button type="button" class="btn btn-primary" (click)="newMember()">Add new party member</button>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+ 
+      <button type="submit" class="btn btn-success" [disabled]="!partyForm.form.valid">Submit</button>
+ 
+    </form>
+</div>

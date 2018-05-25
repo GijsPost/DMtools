@@ -14,6 +14,7 @@ import { EncounterComponent } from './components/encounter/encounter.component';
 import { TrackerComponent } from './components/encounter/tracker/tracker.component';
 import { PartiesComponent } from './components/parties/parties.component';
 import { SpellsComponent } from './components/spells/spells.component';
+import { CreatePartyComponent } from './components/parties/create-party/create-party.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SpellsComponent } from './components/spells/spells.component';
         PartiesComponent,
         OrderBy,
         TrackerComponent,
-        SpellsComponent
+        SpellsComponent,
+        CreatePartyComponent
     ],
     imports: [
         BrowserModule,
@@ -39,6 +41,7 @@ import { SpellsComponent } from './components/spells/spells.component';
             { path: 'monsters', component: MonstersComponent },
             { path: 'encounter', component: EncounterComponent },
             { path: 'parties', component: PartiesComponent },
+            { path: 'parties/new', component: CreatePartyComponent },
             { path: 'spells', component: SpellsComponent },
             { path: 'encounter/tracker/:encounterID', component: TrackerComponent },
             { path: '**', redirectTo: 'home' }
