@@ -1,0 +1,75 @@
+<h1>D&D 5e Monster list</h1>
+
+<p>Dit is een test pagina</p>
+<hr />
+
+<div *ngIf="loaded == true; else loading">
+    <div *ngFor="let monster of monsters">
+        <div class="card" style="margin: 3%; background-color:#fdfceb">
+            <div class="card-body">
+                <h3 class="card-title">{{ monster.name }}</h3>
+                <h4><i>{{ monster.size + " " + monster.type + " " + monster.subtype }} (CR {{ monster.challenge_rating }})</i> <span *ngIf="monster.challenge_rating >= 10" class='glyphicon glyphicon-star'></span> - {{ monster.alignment }}</h4>
+                <p>
+                    <span class="badge badge-info">Strength {{ monster.strength }}</span>
+                    <span class="badge badge-info">Dexterity {{ monster.dexterity }}</span>
+                    <span class="badge badge-info">Constitution {{ monster.constitution }}</span>
+                    <span class="badge badge-info">Wisdom {{ monster.wisdom }}</span>
+                    <span class="badge badge-info">Intelligence {{ monster.intelligence }}</span>
+                    <span class="badge badge-info">Charisma {{ monster.charisma }}</span>
+                </p>
+                <hr />
+                <div class="row">
+                    <div class="col-md">
+                        <b>Speed</b><br />
+                        {{ monster.speed }}<br /><br />
+                        <b>Senses</b><br />
+                        {{ monster.senses }}<br /><br />
+                        <b>Languages</b><br />
+                        {{ monster.languages }}<br /><br />
+
+                    </div>
+                    <div class="col-md">
+                        <div *ngIf="monster.damage_vulnerabilities != ''">
+                            <b>Vulnerabilities: </b><br />
+                            {{ monster.damage_vulnerabilities }}
+                        </div>
+                        <div *ngIf="monster.damage_resistances != ''">
+                            <b>Resistances: </b>
+                            {{ monster.damage_resistances }}
+                        </div>
+                        <div *ngIf="monster.damage_immunities != ''">
+                            <b>Immunities: </b>
+                            {{ monster.damage_immunities + ", " + monster.condition_immunities}}
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <h4>Special Abilities</h4>
+                <div *ngFor="let abil of monster.special_abilities">
+                    <p><b>{{ abil.name }}</b></p>
+                    <p>{{ abil.desc }}</p>
+                </div>
+                <hr />
+                <h4>Actions</h4>
+                <div *ngFor="let action of monster.actions">
+                    <p><b>{{ action.name }}</b></p>
+                    <p>
+                        {{ action.desc }}
+                        <span class="badge badge-warning" *ngIf="action.attack_bonus != 0">attack +{{ action.attack_bonus }}</span>
+                        <span class="badge badge-warning" *ngIf="action.attack_bonus != 0">{{ action.damage_dice }} {{action.damage_bonus != null ? "+ "+action.damage_bonus : ''}}</span>
+                    </p>
+
+                </div>
+                <hr />
+                <h4>Legendary Actions</h4>
+                <div *ngFor="let legac of monster.legendary_actions">
+                    <p><b>{{ legac.name }}</b></p>
+                    <p>{{ legac.desc }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <img src="assets/images/loading.gif" width="100" height="100" style="display: block; margin: auto;" />
+</ng-template>

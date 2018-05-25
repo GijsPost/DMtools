@@ -1,0 +1,33 @@
+<h1>Your Parties</h1>
+
+<hr />
+
+<div class="card" style="margin: 3%; padding: 2%;" *ngFor="let party of parties">
+    <div>
+        <div class="btn-group" style="float: right;">
+            <button type="button" class="btn btn-warning" disabled>Edit</button>
+            <button type="button" class="btn btn-danger" disabled>Delete</button>
+        </div>
+        <h3 style="float: left;">{{ party.party_name }}</h3>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Class & Level</th>
+                <th>AC</th>
+                <th>HP</th>
+            </tr>            
+        </thead>
+        <tbody>
+            <tr *ngFor="let pc of party.party">
+                <td>{{pc.name}}</td>
+                <td>{{pc.PCclass + " " + pc.level }}</td>
+                <td>{{pc.armor_class}}</td>
+                <td>{{pc.hit_points}}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
