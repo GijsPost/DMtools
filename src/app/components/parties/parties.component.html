@@ -1,12 +1,27 @@
 <h1>Your Parties</h1>
 
 <hr />
+<div class="row">
+    <button type="button" class="btn btn-success px-2" style="margin-left:2%;" routerLink="/parties/new">Add new Party</button>
 
-<div class="card" style="margin: 3%; padding: 2%;" *ngFor="let party of parties">
+    <div class="btn-group px-3" role="group" aria-label="Button group with nested dropdown">
+        <button type="button" class="btn btn-info" disabled>Current active party: </button>
+
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{getActiveParty().party_name}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a *ngFor="let party of parties" class="dropdown-item" (click)="setActiveParty(party)">{{party.party_name}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card" style="margin-top: 3%; padding: 2%;" *ngFor="let party of parties">
     <div>
         <div class="btn-group" style="float: right;">
             <button type="button" class="btn btn-warning" disabled>Edit</button>
-            <button type="button" class="btn btn-danger" disabled>Delete</button>
+            <button type="button" class="btn btn-danger" (click)="deleteParty(party)">Delete</button>
         </div>
         <h3 style="float: left;">{{ party.party_name }}</h3>
     </div>

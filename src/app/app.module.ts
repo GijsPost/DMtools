@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -14,7 +14,9 @@ import { EncounterComponent } from './components/encounter/encounter.component';
 import { TrackerComponent } from './components/encounter/tracker/tracker.component';
 import { PartiesComponent } from './components/parties/parties.component';
 import { SpellsComponent } from './components/spells/spells.component';
-
+import { CreatePartyComponent } from './components/parties/create-party/create-party.component';
+import { CookieModule } from 'ngx-cookie';
+import { ResourceService } from './services/resource.service';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,8 @@ import { SpellsComponent } from './components/spells/spells.component';
         PartiesComponent,
         OrderBy,
         TrackerComponent,
-        SpellsComponent
+        SpellsComponent,
+        CreatePartyComponent
     ],
     imports: [
         BrowserModule,
@@ -39,12 +42,14 @@ import { SpellsComponent } from './components/spells/spells.component';
             { path: 'monsters', component: MonstersComponent },
             { path: 'encounter', component: EncounterComponent },
             { path: 'parties', component: PartiesComponent },
+            { path: 'parties/new', component: CreatePartyComponent },
             { path: 'spells', component: SpellsComponent },
             { path: 'encounter/tracker/:encounterID', component: TrackerComponent },
             { path: '**', redirectTo: 'home' }
-        ])
+        ]),
+        CookieModule.forRoot()
     ],
-    providers: [ ],
+    providers: [ ResourceService ],
     bootstrap: [AppComponent],
 })
 export class AppModule {

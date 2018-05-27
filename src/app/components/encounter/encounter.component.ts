@@ -6,6 +6,7 @@ import { PC } from '../../Models/PC';
 import { Encounter } from '../../Models/Encounter';
 import { Router } from '@angular/router';
 import { Party } from '../../Models/Party';
+import { ResourceService } from '../../services/resource.service';
 
 @Component({
     selector: 'encounter',
@@ -25,7 +26,7 @@ export class EncounterComponent {
     public http: Http;
     public router: Router;
 
-    constructor(http: Http, router: Router) {
+    constructor(http: Http, router: Router, private resourceService: ResourceService) {
         this.http = http;
         this.router = router;
 
@@ -33,10 +34,7 @@ export class EncounterComponent {
             this.monsters = result.json() as Monster[];
         }, error => console.error(error));
 
-        this.http.get('https://gijspost.nl/dmtools/api/parties').subscribe(party_result => {
-            var parties = party_result.json() as Party[];
-            this.party = parties[0].party;
-        }, error => console.error(error));
+        this.party = this.resourceService.getActiveParty().party;
     }
 
     public async postEncounter(ec: Encounter) {

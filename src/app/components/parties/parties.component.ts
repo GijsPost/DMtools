@@ -6,6 +6,7 @@ import { PC } from '../../Models/PC';
 import { Party } from '../../Models/Party';
 import { I18NHtmlParser } from '@angular/compiler/src/i18n/i18n_html_parser';
 import { CookieXSRFStrategy } from '@angular/http/src/backends/xhr_backend';
+import { ResourceService } from '../../services/resource.service';
 
 @Component({
     selector: 'parties',
@@ -17,14 +18,21 @@ export class PartiesComponent {
     public parties: Party[] = [];
     public order: string = 'name';
 
-    constructor(http: Http) {
-        http.get('https://gijspost.nl/dmtools/api/parties').subscribe(result => {
-            this.parties = result.json() as Party[];
-        }, error => console.error(error));
+    constructor(private resourceService: ResourceService) {
+        this.parties = resourceService.getParties();
     }
 
-    public saveParty() {
-        
+    deleteParty(party){
+        this.parties.splice(this.parties.indexOf(party),1);
+        this.resourceService.submitParties(this.parties);
+    }
+
+    getActiveParty(){
+        return this.resourceService.getActiveParty();
+    }
+
+    setActiveParty(party: Party){
+        this.resourceService.setActiveParty(party);
     }
 }
 

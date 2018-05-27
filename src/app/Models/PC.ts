@@ -8,4 +8,5 @@
     health_percentage: number;
 
     initiative: any;
+    id: any;
 }
