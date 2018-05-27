@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -15,7 +15,8 @@ import { TrackerComponent } from './components/encounter/tracker/tracker.compone
 import { PartiesComponent } from './components/parties/parties.component';
 import { SpellsComponent } from './components/spells/spells.component';
 import { CreatePartyComponent } from './components/parties/create-party/create-party.component';
-
+import { CookieModule } from 'ngx-cookie';
+import { ResourceService } from './services/resource.service';
 
 @NgModule({
     declarations: [
@@ -45,9 +46,10 @@ import { CreatePartyComponent } from './components/parties/create-party/create-p
             { path: 'spells', component: SpellsComponent },
             { path: 'encounter/tracker/:encounterID', component: TrackerComponent },
             { path: '**', redirectTo: 'home' }
-        ])
+        ]),
+        CookieModule.forRoot()
     ],
-    providers: [ ],
+    providers: [ ResourceService ],
     bootstrap: [AppComponent],
 })
 export class AppModule {
