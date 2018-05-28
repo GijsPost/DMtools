@@ -8,7 +8,7 @@
         <div *ngIf="!noActivePartySet else grayout">
             <h4>Party: {{ this.resourceService.getActiveParty().party_name }}</h4>
 
-            <table class="table players">
+            <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -46,54 +46,59 @@
         </ng-template>
         
 
-        <h4>Allies</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>CR</th>
-                    <th>AC</th>
-                    <th>HP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let ally of allies">
-                    <td>
-                        {{ ally.name }}
-                    </td>
-                    <td>
-                        {{ ally.challenge_rating }}
-                    </td>
-                    <td>
-                        {{ ally.armor_class }}
-                    </td>
-                    <td>
-                        {{ ally.hit_points }}
-                    </td>
-                </tr>
-                <tr>
-                    <div class="row">
-                        <div class="col-md">
-                            <input #Allyadd type="text" class="form-control" name="Allyadd" id="Allyadd" placeholder="Add Ally" (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1" (keyup)="FindAlly(Allyadd)">
-                            <a role="button" *ngFor="let res of queryResAlly" (click)="Allyadd.value=res.name; addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">{{res.name}}<br /></a>
+        <div style="margin-top:5%; margin-bottom:5%;">
+            <div class="row">
+                <h4 style="margin-right:10px; margin-left: 3%">Allies</h4>
+                <i [ngClass]="alliesEnabled ? 'fas fa-toggle-on fa-2x' : 'fas fa-toggle-off fa-2x'" (click)="switchAllies()"></i>
+            </div>
+            <table *ngIf="alliesEnabled" class="table">
+                <thead *ngIf="allies.length > 0">
+                    <tr>
+                        <th>Name</th>
+                        <th>CR</th>
+                        <th>AC</th>
+                        <th>HP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ally of allies">
+                        <td>
+                            {{ ally.name }}
+                        </td>
+                        <td>
+                            {{ ally.challenge_rating }}
+                        </td>
+                        <td>
+                            {{ ally.armor_class }}
+                        </td>
+                        <td>
+                            {{ ally.hit_points }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <div class="row">
+                            <div class="col-md">
+                                <input #Allyadd type="text" class="form-control" name="Allyadd" id="Allyadd" placeholder="Add Ally" (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1" (keyup)="FindAlly(Allyadd)">
+                                <a role="button" *ngFor="let res of queryResAlly" (click)="Allyadd.value=res.name; addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">{{res.name}}<br /></a>
+                            </div>
+                            <div class="col-md">
+                                <input #Allyamount type="number" class="form-control" name="Allyamount" id="Allyamount" placeholder="Amount" value=1 (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">
+                            </div>
+                            <div class="col-md">
+                                <button type="button" class="btn btn-danger" (click)="resetAllies()">Reset</button>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <input #Allyamount type="number" class="form-control" name="Allyamount" id="Allyamount" placeholder="Amount" value=1 (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">
-                        </div>
-                        <div class="col-md">
-                            <button type="button" class="btn btn-danger" (click)="resetAllies()">Reset</button>
-                        </div>
-                    </div>
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <a role="button" class="btn btn-primary start-button" (click)="encounterCreate()" [ngClass]="noActivePartySet ? 'disabled' : ''">Start Encounter</a>
     </div>
     <div class="col-md">
         <h4>Enemies</h4>
         <table class="table">
-            <thead>
+            <thead *ngIf="enemies.length > 0">
                 <tr>
                     <th>Name</th>
                     <th>CR</th>

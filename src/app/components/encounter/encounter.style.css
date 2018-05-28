@@ -2,7 +2,7 @@
     -webkit-text-fill-color: white;
 }
 .grayout{
-    height:80%;
+    height:200px;
     background: rgba(0, 0, 0, 0.1);
     margin:2%;
     padding:2%;
@@ -12,4 +12,16 @@
 }
 .flex-item{
     text-align: center;
+}
+table{
+    border-collapse: collapse;
+}
+tr, td, th{
+    padding: 5px;
+}
+.fa-toggle-on{
+    color:green;
+}
+.fa-toggle-off{
+    color:gray;
 }

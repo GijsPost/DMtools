@@ -26,6 +26,7 @@ export class EncounterComponent {
     public queryResMon: Monster[] = [];
     public queryResAlly: Monster[] = [];
 
+    public alliesEnabled: boolean = false;
     public noActivePartySet: boolean;
 
     public http: Http;
@@ -123,6 +124,10 @@ export class EncounterComponent {
         } else {
             console.error("encounterCreate() failed: list of enemies is null");
         }
+    }
+
+    switchAllies(){
+        this.alliesEnabled = !this.alliesEnabled;
     }
 
     public redirect(id: number) {
