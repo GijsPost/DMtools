@@ -5,34 +5,46 @@
 
 <div class="row">
     <div class="col-md">
-        <h4>Party: {{ this.resourceService.getActiveParty().party_name }}</h4>
+        <div *ngIf="!noActivePartySet else grayout">
+            <h4>Party: {{ this.resourceService.getActiveParty().party_name }}</h4>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Class & Level</th>
-                    <th>AC</th>
-                    <th>HP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let pc of party">
-                    <td>
-                        {{ pc.name }}
-                    </td>
-                    <td>
-                        {{ pc.PCclass + " " + pc.level }}
-                    </td>
-                    <td>
-                        {{ pc.armor_class }}
-                    </td>
-                    <td>
-                        {{ pc.hit_points }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="table players">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Class & Level</th>
+                        <th>AC</th>
+                        <th>HP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pc of party.party">
+                        <td>
+                            {{ pc.name }}
+                        </td>
+                        <td>
+                            {{ pc.PCclass + " " + pc.level }}
+                        </td>
+                        <td>
+                            {{ pc.armor_class }}
+                        </td>
+                        <td>
+                            {{ pc.hit_points }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ng-template #grayout>
+            <div class="grayout flex-container">
+                <div class="flex-item">
+                    <h5 >No active party set</h5>
+                    <p>Please select a party on the <a routerLink="/parties">parties page</a></p>
+                </div>
+            </div>
+        </ng-template>
+        
 
         <h4>Allies</h4>
         <table class="table">
@@ -76,7 +88,7 @@
             </tbody>
         </table>
 
-        <a role="button" class="btn btn-primary start-button" (click)="encounterCreate()">Start Encounter</a>
+        <a role="button" class="btn btn-primary start-button" (click)="encounterCreate()" [ngClass]="noActivePartySet ? 'disabled' : ''">Start Encounter</a>
     </div>
     <div class="col-md">
         <h4>Enemies</h4>

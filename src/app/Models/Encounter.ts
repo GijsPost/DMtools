@@ -4,9 +4,9 @@ import { PC } from "./PC";
 export interface Encounter {
 
     ID: number;
-    party: PC[];
-    enemies: Monster[];
-    allies: Monster[];
+    party: string;
+    enemies: string[];
+    allies: string[];
     round: number;
 
 }

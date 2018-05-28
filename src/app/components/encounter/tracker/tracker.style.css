@@ -5,6 +5,10 @@
     background-color: #f4f4e7;
     margin:1%;
 }
+.turn{
+    min-width: 110px;
+    background-color: #e6e6e6;
+}
 .selected{
     border:solid;
     border-color:red;

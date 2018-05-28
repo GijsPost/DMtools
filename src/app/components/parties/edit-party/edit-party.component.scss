@@ -1,0 +1,25 @@
+.col-md{
+    width:20px;
+}
+.form-control{
+    max-width: 300px;
+}
+.number{
+    max-width: 100px;
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+}
+  
+.ng-invalid:not(form)  {
+border-left: 5px solid #a94442; /* red */
+}
+
+.delete-icon{
+    color:#e3e3e3;
+
+    &:hover{
+        color: red;
+    }
+}
