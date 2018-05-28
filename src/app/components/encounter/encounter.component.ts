@@ -15,13 +15,19 @@ import { ResourceService } from '../../services/resource.service';
 })
 
 export class EncounterComponent {
+    
+    public get monsters() : Monster[] {
+        return this.resourceService.getMonsters();
+    }
 
-    public monsters: Monster[] = [];
     public enemies: Monster[] = [];
-    public party: PC[] = [];
+    public party: Party;
     public allies: Monster[] = [];
     public queryResMon: Monster[] = [];
     public queryResAlly: Monster[] = [];
+
+    public alliesEnabled: boolean = false;
+    public noActivePartySet: boolean;
 
     public http: Http;
     public router: Router;
@@ -30,26 +36,15 @@ export class EncounterComponent {
         this.http = http;
         this.router = router;
 
-        this.http.get('https://gijspost.nl/dmtools/api/monsters').subscribe(result => {
-            this.monsters = result.json() as Monster[];
-        }, error => console.error(error));
-
-        this.party = this.resourceService.getActiveParty().party;
-    }
-
-    public async postEncounter(ec: Encounter) {
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-
-        console.log(JSON.stringify(ec));
-        await this.http.post('https://gijspost.nl/dmtools/api/encounters', JSON.stringify(ec), { headers: headers }).subscribe(encounter_result => {
-            if (encounter_result.ok) {
-                console.log("POST succesfully send");             
-                this.redirect(+encounter_result.text('iso-8859'));
-            } else {
-                console.error("POST failed: " + encounter_result.status);
+        if(this.resourceService.getActiveParty() == null){
+            this.noActivePartySet = true;
+        } else{
+            if(this.resourceService.getActiveParty().party.length <= 0){
+                this.noActivePartySet = true;
             }
-        }, error => console.log(error));
+            this.noActivePartySet = false;
+            this.party = this.resourceService.getActiveParty();
+        }
     }
 
     public addEnemy(value: string, amount: number) {
@@ -119,16 +114,20 @@ export class EncounterComponent {
 
             var ec: Encounter = {
                 ID: 0,
-                party: this.party,
-                enemies: this.enemies,
-                allies: this.allies,
+                party: this.party.party_name,
+                enemies: this.enemies.map(en=>{ return en.name }),
+                allies: this.allies.map(al=>{ return al.name }),
                 round: 0
             }
 
-            this.postEncounter(ec);
+            this.redirect(this.resourceService.addEncounter(ec));
         } else {
             console.error("encounterCreate() failed: list of enemies is null");
         }
+    }
+
+    switchAllies(){
+        this.alliesEnabled = !this.alliesEnabled;
     }
 
     public redirect(id: number) {

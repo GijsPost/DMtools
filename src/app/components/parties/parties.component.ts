@@ -7,6 +7,7 @@ import { Party } from '../../Models/Party';
 import { I18NHtmlParser } from '@angular/compiler/src/i18n/i18n_html_parser';
 import { CookieXSRFStrategy } from '@angular/http/src/backends/xhr_backend';
 import { ResourceService } from '../../services/resource.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'parties',
@@ -18,13 +19,19 @@ export class PartiesComponent {
     public parties: Party[] = [];
     public order: string = 'name';
 
-    constructor(private resourceService: ResourceService) {
+    constructor(private resourceService: ResourceService, private router: Router) {
         this.parties = resourceService.getParties();
+        console.log(this.parties);
+        
     }
 
     deleteParty(party){
         this.parties.splice(this.parties.indexOf(party),1);
         this.resourceService.submitParties(this.parties);
+    }
+
+    editParty(party: Party){
+        this.router.navigate(['parties/edit', party.party_name]);
     }
 
     getActiveParty(){

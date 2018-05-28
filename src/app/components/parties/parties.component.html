@@ -9,10 +9,11 @@
 
         <div class="btn-group" role="group">
             <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{getActiveParty().party_name}}
+            {{getActiveParty() != null ? getActiveParty().party_name : ''}}
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
             <a *ngFor="let party of parties" class="dropdown-item" (click)="setActiveParty(party)">{{party.party_name}}</a>
+            <a class="dropdown-item" (click)="setActiveParty(null)">none</a>
             </div>
         </div>
     </div>
@@ -20,7 +21,7 @@
 <div class="card" style="margin-top: 3%; padding: 2%;" *ngFor="let party of parties">
     <div>
         <div class="btn-group" style="float: right;">
-            <button type="button" class="btn btn-warning" disabled>Edit</button>
+            <button type="button" class="btn btn-warning" (click)="editParty(party)">Edit</button>
             <button type="button" class="btn btn-danger" (click)="deleteParty(party)">Delete</button>
         </div>
         <h3 style="float: left;">{{ party.party_name }}</h3>

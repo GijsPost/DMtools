@@ -4,7 +4,7 @@
 <hr />
 <div *ngIf="turnTracker" style="text-align:center">
     <div class="row" >
-        <div [ngClass]="['card', turn == ent ? 'selected' : '']" *ngFor="let ent of turnTracker.list" style="margin:1%; padding-left:1%; padding-right:1%;">
+        <div [ngClass]="['card turn', turn == ent ? 'selected' : '']" *ngFor="let ent of turnTracker.list" style="margin:1%; padding-left:1%; padding-right:1%;">
             <h5>{{ent.name}}</h5>
         </div>
     </div>

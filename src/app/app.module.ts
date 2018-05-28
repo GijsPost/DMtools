@@ -17,6 +17,7 @@ import { SpellsComponent } from './components/spells/spells.component';
 import { CreatePartyComponent } from './components/parties/create-party/create-party.component';
 import { CookieModule } from 'ngx-cookie';
 import { ResourceService } from './services/resource.service';
+import { EditPartyComponent } from './components/parties/edit-party/edit-party.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { ResourceService } from './services/resource.service';
         OrderBy,
         TrackerComponent,
         SpellsComponent,
-        CreatePartyComponent
+        CreatePartyComponent,
+        EditPartyComponent
     ],
     imports: [
         BrowserModule,
@@ -43,6 +45,7 @@ import { ResourceService } from './services/resource.service';
             { path: 'encounter', component: EncounterComponent },
             { path: 'parties', component: PartiesComponent },
             { path: 'parties/new', component: CreatePartyComponent },
+            { path: 'parties/edit/:party_name', component: EditPartyComponent},
             { path: 'spells', component: SpellsComponent },
             { path: 'encounter/tracker/:encounterID', component: TrackerComponent },
             { path: '**', redirectTo: 'home' }
