@@ -1,7 +1,7 @@
-# DMtools
-D&amp;D 5e DM tools
-
-<img src="src/assets/images/dnd-pixelated.png" width="100px" height="100px">
+# D&amp;D 5e DM tools
+<div style="text-align: center">
+<img src="src/assets/images/dnd-pixelated.png" width="150px" height="150px">
+</div>
 
 <b>What is this?</b>
 <p>This is a web app (being) made for Dungeons and Dragons 5th Edition Dungeon Masters. Made with Angular.
