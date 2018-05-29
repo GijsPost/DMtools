@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Http, RequestOptions, RequestOptionsArgs, Headers } from '@angular/http';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Monster } from '../../Models/Monster';
@@ -14,17 +14,17 @@ import { ResourceService } from '../../services/resource.service';
     styleUrls:['./encounter.style.css']
 })
 
-export class EncounterComponent {
+export class EncounterComponent implements OnInit {
     
-    public get monsters() : Monster[] {
-        return this.resourceService.getMonsters();
-    }
+    public monsters: Monster[];
 
     public enemies: Monster[] = [];
     public party: Party;
     public allies: Monster[] = [];
-    public queryResMon: Monster[] = [];
-    public queryResAlly: Monster[] = [];
+
+    public enemyToAdd: string;
+    public allyToAdd: string;
+    public monstersForQuery: string[] = [];
 
     public alliesEnabled: boolean = false;
     public noActivePartySet: boolean;
@@ -35,6 +35,12 @@ export class EncounterComponent {
     constructor(http: Http, router: Router, private resourceService: ResourceService) {
         this.http = http;
         this.router = router;
+
+        this.http.get(resourceService.MONSTERS_PATH).subscribe(result => {
+            this.monsters = result.json() as Monster[];
+            
+            this.initializeAfterLoad();
+        }, error => console.error(error));
 
         if(this.resourceService.getActiveParty() == null){
             this.noActivePartySet = true;
@@ -47,57 +53,44 @@ export class EncounterComponent {
         }
     }
 
-    public addEnemy(value: string, amount: number) {
-        if (value != null || value != "") {
-            var enemy;
-            enemy = this.monsters.find(enemy => enemy.name == value);
-            if (enemy != undefined) {
-                if (amount != null && amount >= 1) {
-                    for (var i = 0; i < amount; i++) {
-                        this.enemies.push(enemy);
-                    }
-                } else {
-                    amount = 1;
+    ngOnInit(){
+    }
+
+    initializeAfterLoad(){
+        this.monsters.forEach(mon=>{
+            this.monstersForQuery.push(mon.name);
+        });
+    }
+
+    public addEnemy(amount: number) {
+        var enemy = this.monsters.find(en=>{
+            return en.name == this.enemyToAdd;
+        });
+        if (enemy != null && enemy != undefined) {
+            if (amount != null && amount >= 1) {
+                for (var i = 0; i < amount; i++) {
+                    this.enemies.push(enemy);
                 }
             } else {
-                console.error("enemy '"+value+"' not found");
+                this.enemies.push(enemy);
             }
+            this.enemyToAdd = '';
         }
     }
 
-    public addAlly(value: string, amount: number) {
-        if (value != null || value != "") {
-            var ally;
-            ally = this.monsters.find(enemy => enemy.name == value);
-            if (ally != undefined) {
-                if (amount != null && amount >= 1) {
-                    for (var i = 0; i < amount; i++) {
-                        this.allies.push(ally);
-                    }
-                } else {
-                    amount = 1;
+    public addAlly(amount: number) {
+        var ally = this.monsters.find(en=>{
+            return en.name == this.allyToAdd;
+        });
+        if (ally != null && ally != undefined) {
+            if (amount != null && amount >= 1) {
+                for (var i = 0; i < amount; i++) {
+                    this.allies.push(ally);
                 }
             } else {
-                console.error("ally '" + value + "' not found");
+                this.allies.push(ally);
             }
-        }
-    }
-
-    public FindEnem(element: HTMLInputElement) {
-        var found = this.monsters.filter(enemy => enemy.name.toLowerCase().indexOf(element.value.toLowerCase()) >= 0);
-        if (found.length != this.monsters.length) {
-            this.queryResMon = found;
-        } else {
-            this.queryResMon = [];
-        }
-    }
-
-    public FindAlly(element: HTMLInputElement) {
-        var found = this.monsters.filter(enemy => enemy.name.toLowerCase().indexOf(element.value.toLowerCase()) >= 0);
-        if (found.length != this.monsters.length) {
-            this.queryResAlly = found;
-        } else {
-            this.queryResAlly = [];
+            this.allyToAdd = '';
         }
     }
 
@@ -133,6 +126,6 @@ export class EncounterComponent {
     public redirect(id: number) {
         console.log(id);
         
-        this.router.navigate(['encounter/tracker', id]);
+        this.router.navigate(['encounter/tracker']);
     }
 }

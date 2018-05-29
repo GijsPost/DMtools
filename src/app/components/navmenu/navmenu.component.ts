@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DiceRoller } from '../../Models/DiceRoller';
+import { ResourceService } from '../../services/resource.service';
 
 @Component({
     selector: 'nav-menu',
@@ -8,9 +9,17 @@ import { DiceRoller } from '../../Models/DiceRoller';
 })
 export class NavMenuComponent {
 
-    version: string = "0.1.0";
+    version: string = "0.1.1";
 
-    constructor(){
+    get activeParty():string{
+        if(this.resourceService.getActiveParty() != null){
+            return this.resourceService.getActiveParty().party_name;
+        } else{
+            return "None"
+        }
+    }
+
+    constructor(private resourceService: ResourceService){
     }
 
     public roll(input: string) {

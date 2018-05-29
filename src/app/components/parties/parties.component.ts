@@ -20,9 +20,7 @@ export class PartiesComponent {
     public order: string = 'name';
 
     constructor(private resourceService: ResourceService, private router: Router) {
-        this.parties = resourceService.getParties();
-        console.log(this.parties);
-        
+        this.parties = resourceService.getParties();  
     }
 
     deleteParty(party){

@@ -18,6 +18,10 @@ import { CreatePartyComponent } from './components/parties/create-party/create-p
 import { CookieModule } from 'ngx-cookie';
 import { ResourceService } from './services/resource.service';
 import { EditPartyComponent } from './components/parties/edit-party/edit-party.component';
+import { TypeaheadModule } from 'ngx-bootstrap';
+
+import fallback from 'express-history-api-fallback'
+import express from 'express'
 
 @NgModule({
     declarations: [
@@ -47,13 +51,13 @@ import { EditPartyComponent } from './components/parties/edit-party/edit-party.c
             { path: 'parties/new', component: CreatePartyComponent },
             { path: 'parties/edit/:party_name', component: EditPartyComponent},
             { path: 'spells', component: SpellsComponent },
-            { path: 'encounter/tracker/:encounterID', component: TrackerComponent },
+            { path: 'encounter/tracker', component: TrackerComponent },
             { path: '**', redirectTo: 'home' }
         ]),
-        CookieModule.forRoot()
+        CookieModule.forRoot(),
+        TypeaheadModule.forRoot()
     ],
     providers: [ ResourceService ],
     bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
