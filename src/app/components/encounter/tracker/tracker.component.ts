@@ -31,9 +31,7 @@ export class TrackerComponent {
     public turnNum: number;
     public selected: Monster;
 
-    get monsters(): Monster[]{
-        return this.resourceService.getMonsters();
-    }
+    public monsters: Monster[];
 
     public router: Router;
     public dr: DiceRoller = new DiceRoller;
@@ -43,23 +41,18 @@ export class TrackerComponent {
         this.http = http;
         this.router = router;
 
-        this.route.params.subscribe(params => {
-            this.encounterID = +params['encounterID'];
-        });
+        this.http.get(resourceService.MONSTERS_PATH).subscribe(result => {
+            this.monsters = result.json() as Monster[];
+
+            this.initializeAfterLoad();
+        }, error => console.error(error));
         
-        this.encounter = this.resourceService.getLastEncounter();
+        this.encounter = this.resourceService.getLastEncounter(); 
 
-        console.log(this.encounter);   
-
-        if(this.resourceService.getLastEncounter().ID != this.encounterID){
-            console.error("Error with cookie saving, encounter ID mismatch, loaded last encounter");
-        }
         this.party = this.resourceService.findParty(this.encounter.party).party;
         this.party.forEach(member=>{
             member.initiative = null;
         });
-        this.enemies = this.formulateEntities(this.encounter.enemies);
-        this.allies = this.formulateEntities(this.encounter.allies);
         this.round = 0;
         this.turnNum = 0;
 
@@ -71,6 +64,11 @@ export class TrackerComponent {
 
     public setInit(guy: PC|Monster, init: number) {
         guy.initiative = init;
+    }
+
+    public initializeAfterLoad(){
+        this.enemies = this.formulateEntities(this.encounter.enemies);
+        this.allies = this.formulateEntities(this.encounter.allies);
     }
 
     public formulateEntities(names: string[]): Monster[]{
@@ -95,10 +93,6 @@ export class TrackerComponent {
             });
             
             var entity: Monster = this.cloneMonster(toCopy);     
-            console.log(this.monsters);
-            
-            console.log(entity);
-            
 
             if(entity){
                 entity.name = preparedName;
@@ -154,10 +148,7 @@ export class TrackerComponent {
                 this.party[i].initiative = +input;
             }
             if (!this.party[i].initiative || this.party[i].initiative == 0) {
-                //emptyError = true;
-                //DEVMODE ONLY
-                this.party[i].initiative = 10;
-                //DEVMODE ONLY
+                emptyError = true;
             }
         }
         for (var i = 0; i < this.enemies.length; i++) {
@@ -166,10 +157,7 @@ export class TrackerComponent {
                 this.enemies[i].initiative = +input;
             }
             if (!this.enemies[i].initiative || this.enemies[i].initiative == 0) {
-                //emptyError = true;
-                //DEVMODE ONLY
-                this.enemies[i].initiative = 10;
-                //DEVMODE ONLY
+                emptyError = true;
             }
         }
         for (var i = 0; i < this.allies.length; i++) {
@@ -178,10 +166,7 @@ export class TrackerComponent {
                 this.allies[i].initiative = +input;
             }
             if (!this.allies[i].initiative || this.allies[i].initiative == 0) {
-                //emptyError = true;
-                //DEVMODE ONLY
-                this.allies[i].initiative = 10;
-                //DEVMODE ONLY
+                emptyError = true;
             }
         }
         if (!emptyError) {

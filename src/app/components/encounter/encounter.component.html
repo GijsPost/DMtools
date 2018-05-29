@@ -78,11 +78,10 @@
                     <tr>
                         <div class="row">
                             <div class="col-md">
-                                <input #Allyadd type="text" class="form-control" name="Allyadd" id="Allyadd" placeholder="Add Ally" (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1" (keyup)="FindAlly(Allyadd)">
-                                <a role="button" *ngFor="let res of queryResAlly" (click)="Allyadd.value=res.name; addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">{{res.name}}<br /></a>
+                                <input #Allyadd type="text" class="form-control" name="Allyadd" id="Allyadd" placeholder="Add Ally" [(ngModel)]="allyToAdd" [typeahead]="monstersForQuery" (keyup.enter)="addAlly(Allyamount.value); Allyamount.value=1">
                             </div>
                             <div class="col-md">
-                                <input #Allyamount type="number" class="form-control" name="Allyamount" id="Allyamount" placeholder="Amount" value=1 (keyup.enter)="addAlly(Allyadd.value, Allyamount.value); Allyadd.value=''; Allyamount.value=1">
+                                <input #Allyamount type="number" class="form-control" name="Allyamount" id="Allyamount" placeholder="Amount" value=1 (keyup.enter)="addAlly(Allyamount.value); Allyamount.value=1">
                             </div>
                             <div class="col-md">
                                 <button type="button" class="btn btn-danger" (click)="resetAllies()">Reset</button>
@@ -124,11 +123,13 @@
                 <tr>
                     <div class="row">
                         <div class="col-md">
-                            <input #query type="text" class="form-control" name="query" id="query" placeholder="Add enemy" (keyup.enter)="addEnemy(query.value, amount.value); query.value=''; amount.value=1" (keyup)="FindEnem(query)">
-                            <a role="button" *ngFor="let res of queryResMon" (click)="query.value=res.name; addEnemy(query.value, amount.value); query.value=''; amount.value=1" >{{res.name}}<br /></a>
+                            <input #query name="query" id="query" placeholder="Search..." [(ngModel)]="enemyToAdd"
+                            [typeahead]="monstersForQuery"
+                            class="form-control"
+                            (keyup.enter)="addEnemy(amount.value); amount.value=1">
                         </div>
                         <div class="col-md">
-                            <input #amount type="number" class="form-control" name="amount" id="amount" placeholder="Amount" value=1 (keyup.enter)="addEnemy(query.value, amount.value); query.value=''; amount.value=1">
+                            <input #amount type="number" class="form-control" name="amount" id="amount" placeholder="Amount" value=1 (keyup.enter)="addEnemy(amount.value); amount.value=1">
                         </div>
                         <div class="col-md">
                             <button type="button" class="btn btn-danger" (click)="resetEnemies()">Reset</button>

@@ -12,25 +12,11 @@ import { Observable } from 'rxjs';
 })
 export class ResourceService {
 
-  private readonly API_LOCATION = "assets/repository";
-  private readonly MONSTERS_PATH = "/monsters.json";
-  private readonly SPELLS_PATH = "/spells.json";
-
-  private monsters: Monster[] = [];
-  private spells: Spell[] = [];
+  public readonly API_LOCATION = "assets/repository";
+  public readonly MONSTERS_PATH = this.API_LOCATION+"/monsters.json";
+  public readonly SPELLS_PATH = this.API_LOCATION+"/spells.json";
 
   constructor(private http: Http, private cookieService: CookieService) {
-
-    
-    this.http.get(this.API_LOCATION+this.MONSTERS_PATH).subscribe(result => {
-      this.monsters = result.json() as Monster[];
-      
-    }, error => console.error(error));
-
-    this.http.get(this.API_LOCATION+this.SPELLS_PATH).subscribe(result => {
-      this.spells = result.json() as Spell[];
-    }, error => console.error(error));
-    
   }
 
   getActiveParty(): Party{
@@ -75,14 +61,6 @@ export class ResourceService {
       return query.party_name == name;
     });
     return party;
-  }
-
-  getMonsters(): Monster[]{
-    return this.monsters;
-  }
-
-  getSpells(): Spell[]{
-    return this.spells;
   }
 
   getLastEncounter(): Encounter{
