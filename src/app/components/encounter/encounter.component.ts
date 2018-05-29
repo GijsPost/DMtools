@@ -11,12 +11,16 @@ import { ResourceService } from '../../services/resource.service';
 @Component({
     selector: 'encounter',
     templateUrl: './encounter.component.html',
-    styleUrls:['./encounter.style.css']
+    styleUrls:['./encounter.style.scss']
 })
 
 export class EncounterComponent implements OnInit {
     
     public monsters: Monster[];
+
+    get tooManyEntities(): boolean{
+        return ((this.party.party.length + this.enemies.length + this.allies.length) > 50);
+    }
 
     public enemies: Monster[] = [];
     public party: Party;
@@ -102,20 +106,32 @@ export class EncounterComponent implements OnInit {
         this.allies = [];
     }
 
+    public removeEnemy(enemy: Monster){
+        this.enemies.splice(this.enemies.indexOf(enemy),1);
+    }
+
+    public removeAlly(ally: Monster){
+        this.allies.splice(this.allies.indexOf(ally),1);
+    }
+
     public encounterCreate() {
-        if (this.enemies != null && this.enemies.length > 0) {
+        if(this.tooManyEntities){
+            if (this.enemies != null && this.enemies.length > 0) {
 
-            var ec: Encounter = {
-                ID: 0,
-                party: this.party.party_name,
-                enemies: this.enemies.map(en=>{ return en.name }),
-                allies: this.allies.map(al=>{ return al.name }),
-                round: 0
+                var ec: Encounter = {
+                    ID: 0,
+                    party: this.party.party_name,
+                    enemies: this.enemies.map(en=>{ return en.name }),
+                    allies: this.allies.map(al=>{ return al.name }),
+                    round: 0
+                }
+    
+                this.redirect(this.resourceService.addEncounter(ec));
+            } else {
+                console.error("encounterCreate() failed: list of enemies is null");
             }
-
-            this.redirect(this.resourceService.addEncounter(ec));
-        } else {
-            console.error("encounterCreate() failed: list of enemies is null");
+        } else{
+            console.error("Total list of entities is too large! Keep it smaller than 50 please :P");
         }
     }
 
@@ -125,7 +141,6 @@ export class EncounterComponent implements OnInit {
 
     public redirect(id: number) {
         console.log(id);
-        
         this.router.navigate(['encounter/tracker']);
     }
 }

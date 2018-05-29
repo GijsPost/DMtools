@@ -7,6 +7,8 @@
 <p>This is a web app (being) made for Dungeons and Dragons 5th Edition Dungeon Masters. Made with Angular.
 Please keep in mind that this is still under development, and nowhere near done.</p>
 
+LIVE DEMO: <a href="https://gijspost.nl/dmtools/app/DMTools">https://gijspost.nl/dmtools/app/DMTools</a>
+
 <b>Features</b>
 <p>This web app contains: </p>
 <ul>
@@ -28,4 +30,5 @@ Please keep in mind that this is still under development, and nowhere near done.
 </ul> 
 
 <b>Notes</b>
-<p>If the application is hard to run and you don't understand it, i'm sorry. Perhaps it is best if you have some experience with running angular projects when using this app. I'm currently trying to find a way to publish the web app online. That said, the app doesn't use an api, it loads its two main data files (monsters.json / spells.json) from the assets folder. Maybe when I put this app online somewhere I will link an api to it, so I can remotely update the monster database. This web app is not optimalized for mobile (yet) so I highly recommend using a normal desktop browser.</p>
+<p>If the application is hard to run and you don't understand it, i'm sorry. Perhaps it is best if you have some experience with running angular projects when using this app. You can use the live demo online on my domain, but i cannot guarantee full up-time and latest releases. That said, the app doesn't use an api, it loads its two main data files (monsters.json / spells.json) from the assets folder. Maybe when I put this app online somewhere I will link an api to it, so I can remotely update the monster database. This web app is not optimalized for mobile (yet) so I highly recommend using a normal desktop browser.</p>
+

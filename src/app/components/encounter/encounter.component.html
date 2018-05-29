@@ -58,6 +58,9 @@
                         <th>CR</th>
                         <th>AC</th>
                         <th>HP</th>
+                        <th>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="resetAllies()">Clear</button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,17 +77,17 @@
                         <td>
                             {{ ally.hit_points }}
                         </td>
+                        <td>
+                            <i class="fas fa-times-circle fa-2x delete-icon" (click)="removeAlly(ally)"></i>
+                        </td>
                     </tr>
                     <tr>
                         <div class="row">
-                            <div class="col-md">
+                            <div class="col-md-6">
                                 <input #Allyadd type="text" class="form-control" name="Allyadd" id="Allyadd" placeholder="Add Ally" [(ngModel)]="allyToAdd" [typeahead]="monstersForQuery" (keyup.enter)="addAlly(Allyamount.value); Allyamount.value=1">
                             </div>
-                            <div class="col-md">
+                            <div class="col-md-4">
                                 <input #Allyamount type="number" class="form-control" name="Allyamount" id="Allyamount" placeholder="Amount" value=1 (keyup.enter)="addAlly(Allyamount.value); Allyamount.value=1">
-                            </div>
-                            <div class="col-md">
-                                <button type="button" class="btn btn-danger" (click)="resetAllies()">Reset</button>
                             </div>
                         </div>
                     </tr>
@@ -92,7 +95,7 @@
             </table>
         </div>
 
-        <a role="button" class="btn btn-primary start-button" (click)="encounterCreate()" [ngClass]="noActivePartySet ? 'disabled' : ''">Start Encounter</a>
+        <a role="button" class="btn btn-primary start-button" (click)="encounterCreate()" [ngClass]="(noActivePartySet || enemies.length <= 0 || tooManyEntities) ? 'disabled' : ''">Start Encounter</a>
     </div>
     <div class="col-md">
         <h4>Enemies</h4>
@@ -103,6 +106,9 @@
                     <th>CR</th>
                     <th>AC</th>
                     <th>HP</th>
+                    <th>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="resetEnemies()">Clear</button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -119,20 +125,20 @@
                     <td>
                         {{ enemy.hit_points }}
                     </td>
+                    <td>
+                        <i class="fas fa-times-circle fa-2x delete-icon" (click)="removeEnemy(enemy)"></i>
+                    </td>
                 </tr>
                 <tr>
                     <div class="row">
-                        <div class="col-md">
+                        <div class="col-md-8">
                             <input #query name="query" id="query" placeholder="Search..." [(ngModel)]="enemyToAdd"
                             [typeahead]="monstersForQuery"
                             class="form-control"
                             (keyup.enter)="addEnemy(amount.value); amount.value=1">
                         </div>
-                        <div class="col-md">
+                        <div class="col-md-4">
                             <input #amount type="number" class="form-control" name="amount" id="amount" placeholder="Amount" value=1 (keyup.enter)="addEnemy(amount.value); amount.value=1">
-                        </div>
-                        <div class="col-md">
-                            <button type="button" class="btn btn-danger" (click)="resetEnemies()">Reset</button>
                         </div>
                     </div>
                 </tr>

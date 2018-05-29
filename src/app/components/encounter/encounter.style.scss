@@ -16,7 +16,7 @@
 table{
     border-collapse: collapse;
 }
-tr, td, th{
+tr, td{
     padding: 5px;
 }
 .fa-toggle-on{
@@ -24,4 +24,11 @@ tr, td, th{
 }
 .fa-toggle-off{
     color:gray;
+}
+.delete-icon{
+    color: transparent;
+
+    &:hover{
+        color: red;
+    }
 }
