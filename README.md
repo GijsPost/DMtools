@@ -7,7 +7,7 @@
 <p>This is a web app (being) made for Dungeons and Dragons 5th Edition Dungeon Masters. Made with Angular.
 Please keep in mind that this is still under development, and nowhere near done.</p>
 
-LIVE DEMO: <a href="https://gijspost.nl/dmtools/app/DMTools">https://gijspost.nl/dmtools/app/DMTools</a>
+LIVE DEMO: <a href="https://gijspost.nl/dmtools">https://gijspost.nl/dmtools</a>
 
 <b>Features</b>
 <p>This web app contains: </p>
