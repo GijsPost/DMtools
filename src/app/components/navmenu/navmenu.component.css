@@ -29,9 +29,10 @@
     }
     .btn{
         margin-bottom:5px;
+        -webkit-text-fill-color: black;
     }
     .diceroller-field{
-        width: 30%;
+        width: 100%;
         -webkit-text-fill-color: black;
     }
 }

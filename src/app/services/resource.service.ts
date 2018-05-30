@@ -66,6 +66,8 @@ export class ResourceService {
   getLastEncounter(): Encounter{
     var cookie = this.cookieService.getObject("encounter_cookie");
     if(cookie != null && cookie != undefined){
+      console.log(cookie);
+      
       return cookie as Encounter;
     } else{
       return null;

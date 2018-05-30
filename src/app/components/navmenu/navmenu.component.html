@@ -6,8 +6,17 @@
             <div style="text-align:center">
                 <hr />
                 <h4 class="text-light" >Dice roller</h4>
-                <input class="diceroller-field" type="text" #diceroller (keyup.enter)="roll(diceroller.value)" value="1d20"/>
-                <input readonly class="diceroller-field" type="number" #output id="output" />
+                <div class="row" style="margin-left:20%; margin-right:20%;">
+                    <div class="col-md" style="padding-left:0%; padding-right:0%;">
+                        <input class="form-control diceroller-field" type="text" #diceroller (keyup.enter)="roll(diceroller.value)" value="1d20"/>
+                    </div>
+                    <div class="col-md">
+                        <button type="button" class="btn btn-light text-dark" (click)="roll(diceroller.value)">Roll</button>
+                    </div>
+                    <div class="col-md" style="padding-left:0%; padding-right:0%;">
+                        <input readonly class="form-control diceroller-field" type="number" #output id="output" />
+                    </div>
+                </div>
                 <hr />
             </div>
             <div class='btn-group-vertical buttons'>
