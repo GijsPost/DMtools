@@ -115,7 +115,7 @@ export class EncounterComponent implements OnInit {
     }
 
     public encounterCreate() {
-        if(this.tooManyEntities){
+        if(!this.tooManyEntities){
             if (this.enemies != null && this.enemies.length > 0) {
 
                 var ec: Encounter = {
