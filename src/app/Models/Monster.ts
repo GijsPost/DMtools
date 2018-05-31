@@ -8,7 +8,10 @@ export interface Monster {
     subtype: string;
     alignment: string;
     speed: string;
+
     challenge_rating: string;
+    number_cr: number;
+
     language: string;
     senses: string;
 

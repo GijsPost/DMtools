@@ -11,8 +11,10 @@
     concentration: string;
     casting_time: string;
     level: string;
+    level_nr: number;
     school: string;
     SPclass: string;
+    SPClasses: string[];
     archetype: string;
     domains: string;
     circles: string;
