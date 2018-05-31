@@ -1,0 +1,21 @@
+.layoutButton{
+    cursor:pointer;
+    color:gray;
+    margin-left: 2%;
+    padding: auto;
+
+    &:hover{
+        color:black;
+    }
+}
+
+.card{
+    margin: 2%;
+    background-color:#fdfceb;
+}
+.card-row{
+    max-width:40%;
+}
+.prop{
+    margin:2%;
+}

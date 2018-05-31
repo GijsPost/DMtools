@@ -3,53 +3,91 @@
 <p>A list of all monsters in the PHB and MM. Layout will be revised sometime.</p>
 <hr />
 
-<div *ngIf="loaded == true; else loading">
-    <div *ngFor="let monster of monsters">
-        <div class="card" style="margin: 3%; background-color:#fdfceb">
-            <div class="card-body">
-                <h3 class="card-title">{{ monster.name }}</h3>
-                <h4><i>{{ monster.size + " " + monster.type + " " + monster.subtype }} (CR {{ monster.challenge_rating }})</i> <span *ngIf="monster.challenge_rating >= 10" class='glyphicon glyphicon-star'></span> - {{ monster.alignment }}</h4>
-                <p>
-                    <span class="badge badge-info">Strength {{ monster.strength }}</span>
-                    <span class="badge badge-info">Dexterity {{ monster.dexterity }}</span>
-                    <span class="badge badge-info">Constitution {{ monster.constitution }}</span>
-                    <span class="badge badge-info">Wisdom {{ monster.wisdom }}</span>
-                    <span class="badge badge-info">Intelligence {{ monster.intelligence }}</span>
-                    <span class="badge badge-info">Charisma {{ monster.charisma }}</span>
-                </p>
-                <hr />
-                <div class="row">
-                    <div class="col-md">
-                        <b>Speed</b><br />
-                        {{ monster.speed }}<br /><br />
-                        <b>Senses</b><br />
-                        {{ monster.senses }}<br /><br />
-                        <b>Languages</b><br />
-                        {{ monster.languages }}<br /><br />
+<div class="row">
+    <div class="btn-group px-3" role="group" aria-label="Button group with nested dropdown">
+        <button type="button" class="btn btn-info" disabled>Sort by </button>
 
+        <div class="btn-group" role="group">
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{sortOrder}}
+                </button>
+                <div #sort class="dropdown-menu" aria-labelledby="#btnGroupDrop1">
+                    <a *ngFor="let sort of sortables" class="dropdown-item" style="cursor: pointer;" (click)="sortBy(sort, sortOrderFlip)">{{sort}}</a>
+                </div>
+            </div>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop2" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{sortOrderFlip}}
+                </button>
+                <div #order class="dropdown-menu" aria-labelledby="#btnGroupDrop2">
+                    <a class="dropdown-item" style="cursor: pointer;" (click)="sortBy(sortOrder, 'desc')">Descending</a>
+                    <a class="dropdown-item" style="cursor: pointer;" (click)="sortBy(sortOrder, 'asc')">Ascending</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search bar -->
+    <input #searchbar class="form-control" style="width: 20%;" type="text" placeholder="Search..." value="" (keyup)="filterMonster(searchbar.value)">
+
+    <!-- Layout -->
+    <i [ngClass]="!layoutRow ? 'fas fa-bars fa-2x layoutButton' : 'fas fa-th-large fa-2x layoutButton'" (click)="layoutRow = !layoutRow"></i>
+</div>
+
+<div [ngClass]="layoutRow ? 'row': ''" *ngIf="loaded == true; else loading">
+    <div *ngFor="let monster of filteredMonsters" [ngClass]="layoutRow ? 'card card-row' : 'card'">
+        <div class="card-body">
+            <h3 class="card-title">{{ monster.name }}</h3>
+            <h4><i>{{ monster.size + " " + monster.type + " " + monster.subtype }} (CR {{ monster.challenge_rating }})</i> <span *ngIf="monster.challenge_rating >= 10" class='glyphicon glyphicon-star'></span> - {{ monster.alignment }}</h4>
+            <p>
+                    <span class="badge badge-info">Strength {{ monster.strength + " ( " + (abc.get(monster.strength) > 0 ? '+' : '') + abc.get(monster.strength) + " )" }}</span>
+                    <span class="badge badge-info">Dexterity {{ monster.dexterity + " ( " + (abc.get(monster.dexterity) > 0 ? '+' : '') + abc.get(monster.dexterity) + " )" }}</span>
+                    <span class="badge badge-info">Constitution {{ monster.constitution + " ( " + (abc.get(monster.constitution)  > 0 ? '+' : '') + abc.get(monster.constitution) + " )"}}</span>
+                    <span class="badge badge-info">Wisdom {{ monster.wisdom + " ( " + (abc.get(monster.wisdom) > 0 ? '+' : '') + abc.get(monster.wisdom)  + " )" }}</span>
+                    <span class="badge badge-info">Intelligence {{ monster.intelligence + " ( " + (abc.get(monster.intelligence) > 0 ? '+' : '') + abc.get(monster.intelligence) + " )" }}</span>
+                    <span class="badge badge-info">Charisma {{ monster.charisma + " ( " + (abc.get(monster.charisma) > 0 ? '+' : '') + abc.get(monster.charisma) +" )" }}</span>
+            </p>
+            <div class="row">
+                <div class="col-md" style="margin-right:5%;"><i class="fas fa-shield-alt"></i><b>AC: </b>{{monster.armor_class}}</div>
+                <div class="col-md" style="margin-right:5%; margin-left:5%"><i class="fas fa-heart"></i><b>HP: </b>{{monster.hit_points}}</div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md">
+                    <b>Speed</b><br />
+                    {{ monster.speed }}<br /><br />
+                    <b>Senses</b><br />
+                    {{ monster.senses }}<br /><br />
+                    <b>Languages</b><br />
+                    {{ monster.languages }}<br /><br />
+
+                </div>
+                <div class="col-md">
+                    <div *ngIf="monster.damage_vulnerabilities != ''">
+                        <b>Vulnerabilities: </b><br />
+                        {{ monster.damage_vulnerabilities }}
                     </div>
-                    <div class="col-md">
-                        <div *ngIf="monster.damage_vulnerabilities != ''">
-                            <b>Vulnerabilities: </b><br />
-                            {{ monster.damage_vulnerabilities }}
-                        </div>
-                        <div *ngIf="monster.damage_resistances != ''">
-                            <b>Resistances: </b>
-                            {{ monster.damage_resistances }}
-                        </div>
-                        <div *ngIf="monster.damage_immunities != ''">
-                            <b>Immunities: </b>
-                            {{ monster.damage_immunities + ", " + monster.condition_immunities}}
-                        </div>
+                    <div *ngIf="monster.damage_resistances != ''">
+                        <b>Resistances: </b>
+                        {{ monster.damage_resistances }}
+                    </div>
+                    <div *ngIf="monster.damage_immunities != ''">
+                        <b>Immunities: </b>
+                        {{ monster.damage_immunities + ", " + monster.condition_immunities}}
                     </div>
                 </div>
-                <hr />
+            </div>
+            <hr />
+            <div *ngIf="monster.special_abilities">
                 <h4>Special Abilities</h4>
                 <div *ngFor="let abil of monster.special_abilities">
                     <p><b>{{ abil.name }}</b></p>
                     <p>{{ abil.desc }}</p>
                 </div>
                 <hr />
+            </div>
+            <div *ngIf="monster.actions">
                 <h4>Actions</h4>
                 <div *ngFor="let action of monster.actions">
                     <p><b>{{ action.name }}</b></p>
@@ -58,9 +96,10 @@
                         <span class="badge badge-warning" *ngIf="action.attack_bonus != 0">attack +{{ action.attack_bonus }}</span>
                         <span class="badge badge-warning" *ngIf="action.attack_bonus != 0">{{ action.damage_dice }} {{action.damage_bonus != null ? "+ "+action.damage_bonus : ''}}</span>
                     </p>
-
                 </div>
                 <hr />
+            </div>
+            <div *ngIf="monster.legendary_actions">
                 <h4>Legendary Actions</h4>
                 <div *ngFor="let legac of monster.legendary_actions">
                     <p><b>{{ legac.name }}</b></p>
