@@ -39,5 +39,16 @@ export class PartiesComponent {
     setActiveParty(party: Party){
         this.resourceService.setActiveParty(party);
     }
+    
+    downloadParty(party: Party){
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(party));
+        var exportName = party.party_name.trim();
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", exportName + ".json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
 }
 

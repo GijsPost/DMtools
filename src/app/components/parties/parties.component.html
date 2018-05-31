@@ -21,6 +21,7 @@
 <div class="card" style="margin-top: 3%; padding: 2%;" *ngFor="let party of parties">
     <div>
         <div class="btn-group" style="float: right;">
+            <button type="button" class="btn btn-success" (click)="downloadParty(party)"><i class="fas fa-download"></i> Export</button>
             <button type="button" class="btn btn-warning" (click)="editParty(party)">Edit</button>
             <button type="button" class="btn btn-danger" (click)="deleteParty(party)">Delete</button>
         </div>
