@@ -21,7 +21,12 @@ export class ResourceService {
   public statusEffects: StatusEffect[] = [];
 
   public get customMonsters(): Monster[]{
-    return JSON.parse(localStorage.getItem("customMonsters")) as Monster[];
+    var temp = JSON.parse(localStorage.getItem("customMonsters")) as Monster[];
+    if(temp){
+      return temp;
+    } else{
+      return [];
+    }
   }
   public set customMonsters(monsters: Monster[]){
     localStorage.setItem("customMonsters",JSON.stringify(monsters));
