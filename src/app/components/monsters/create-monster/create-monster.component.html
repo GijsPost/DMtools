@@ -1,0 +1,172 @@
+<div class="container">
+  <h1>Create new Monster</h1>
+  <form (ngSubmit)="submit()" #monsterForm="ngForm">
+    <div class="row">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="monster.name" name="name">
+      </div>
+
+      <div class="form-group">
+        <label for="align">Alignment</label>
+        <select class="form-control" id="alignment" name="alignment" [(ngModel)]="monster.alignment" required>
+          <option [value]="'any'">Any</option>
+          <option [value]="'lawful good'">Lawful Good</option>
+          <option [value]="'lawful neutral'">Lawful Neutral</option>
+          <option [value]="'lawful evil'">Lawful Evil</option>
+          <option [value]="'neutral good'">Neutral Good</option>
+          <option [value]="'neutral'">Neutral</option>
+          <option [value]="'neutral evil'">Neutral Evil</option>
+          <option [value]="'chaotic good'">Chaotic Good</option>
+          <option [value]="'chaotic neutral'">Chaotic Neutral</option>
+          <option [value]="'chaotic evil'">Chaotic Evil</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="CR">Challenge Rating</label>
+        <input type="text" class="form-control" id="CR" required [(ngModel)]="monster.challenge_rating" name="CR">
+      </div>
+
+      <div class="form-group">
+        <label for="lang">Languages</label>
+        <input type="text" class="form-control" id="lang" [(ngModel)]="monster.language" name="lang">
+      </div>
+
+      <div class="form-group">
+        <label for="size">Size</label>
+        <input type="text" class="form-control" id="size" required [(ngModel)]="monster.size" name="size">
+      </div>
+
+      <div class="form-group">
+        <label for="type">Type</label>
+        <input type="text" class="form-control" id="type" required [(ngModel)]="monster.type" name="type">
+      </div>
+
+      <div class="form-group">
+        <label for="senses">Senses</label>
+        <input type="text" class="form-control" id="senses" [(ngModel)]="monster.senses" name="senses">
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+
+      <div class="form-group abil">
+        <label for="str">Strength</label>
+        <input type="number" class="form-control" id="str" required [(ngModel)]="monster.strength" name="str">
+      </div>
+
+      <div class="form-group abil">
+        <label for="dex">Dexterity</label>
+        <input type="number" class="form-control" id="dex" required [(ngModel)]="monster.dexterity" name="dex">
+      </div>
+
+      <div class="form-group abil">
+        <label for="cons">Constitution</label>
+        <input type="number" class="form-control" id="cons" required [(ngModel)]="monster.constitution" name="cons">
+      </div>
+
+      <div class="form-group abil">
+        <label for="wis">Wisdom</label>
+        <input type="number" class="form-control" id="wis" required [(ngModel)]="monster.wisdom" name="wis">
+      </div>
+
+      <div class="form-group abil">
+        <label for="int">Intelligence</label>
+        <input type="number" class="form-control" id="int" required [(ngModel)]="monster.intelligence" name="int">
+      </div>
+
+      <div class="form-group abil">
+        <label for="char">Charisma</label>
+        <input type="number" class="form-control" id="char" required [(ngModel)]="monster.charisma" name="char">
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+
+      <div class="form-group">
+        <label for="speed">Speed</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="speed" required [(ngModel)]="monster.speed" name="speed" aria-describedby="speed-addon">
+          <div class="input-group-append">
+            <span class="input-group-text" id="speed-addon">ft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ac">Armor Class</label>
+        <input type="number" class="form-control" id="ac" required [(ngModel)]="monster.armor_class" name="ac">
+      </div>
+
+      <div class="form-group">
+        <label for="hp">Hit Points</label>
+        <input type="number" class="form-control" id="hp" required [(ngModel)]="monster.hit_points" name="hp">
+      </div>
+
+      <div class="form-group">
+        <label for="pp">Passive Perception</label>
+        <input type="number" class="form-control" id="pp" [(ngModel)]="monster.perception" name="pp">
+      </div>
+
+      <div class="form-group">
+        <label for="dmg_vul">Damage Vulnerabilities</label>
+        <textarea type="text" class="form-control" id="dmg_vul" [(ngModel)]="monster.damage_vulnerabilities" name="dmg_vul"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="dmg_res">Damage Resistances</label>
+        <textarea type="text" class="form-control" id="dmg_res" [(ngModel)]="monster.damage_resistances" name="dmg_res"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="dmg_imm">Damage Immunities</label>
+        <textarea type="text" class="form-control" id="dmg_imm" [(ngModel)]="monster.damage_immunities" name="dmg_imm"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="con_imm">Condition Immunities</label>
+        <textarea type="text" class="form-control" id="con_imm" [(ngModel)]="monster.condition_immunities" name="con_imm"></textarea>
+      </div>
+    </div>
+    <hr>
+    <h4 style="margin-bottom:3%">Actions <i class="fas fa-plus add-action" (click)="addAction()"></i></h4>
+    <div class="card" *ngFor="let action of monster.actions; let index = index">
+    
+      <i class="fas fa-trash-alt fa-2x delete-action" (click)="deleteAction(action)"></i>
+
+      <div class="form-group">
+        <label for="ac_name{{index}}">Name</label>
+        <input type="text" class="form-control" id="ac_name{{index}}" required [(ngModel)]="action.name" name="ac_name{{index}}">
+      </div>
+
+      <div class="form-group">
+        <label for="ac_desc{{index}}">Description</label>
+        <textarea type="text" class="form-control" id="ac_desc{{index}}" required [(ngModel)]="action.desc" name="ac_desc{{index}}"></textarea>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="ac_atk_bon{{index}}">Attack Bonus</label>
+          <input type="number" class="form-control" id="ac_atk_bon{{index}}" [(ngModel)]="action.attack_bonus" name="ac_atk_bon{{index}}">
+        </div>
+
+        <div class="form-group">
+          <label for="ac_dmg_dice{{index}}">Damage Dice</label>
+          <input type="text" class="form-control" id="ac_dmg_dice{{index}}" [(ngModel)]="action.damage_dice" name="ac_dmg_dice{{index}}">
+        </div>
+
+        <div class="form-group">
+          <label for="ac_dmg_bon{{index}}">Damage Bonus</label>
+          <input type="number" class="form-control" id="ac_dmg_bon{{index}}" [(ngModel)]="action.damage_bonus" name="ac_dmg_bon{{index}}">
+        </div>
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!monsterForm.form.valid">Submit</button>
+
+  </form>
+</div>

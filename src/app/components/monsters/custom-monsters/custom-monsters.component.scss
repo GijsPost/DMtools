@@ -1,0 +1,14 @@
+.import-field{
+    background-color:rgb(223, 223, 223);
+    border: dotted;
+    padding: 10%;
+    margin: auto;
+}
+
+.delete-icon{
+    color:#e3e3e3;
+
+    &:hover{
+        color: red;
+    }
+}
