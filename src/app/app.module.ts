@@ -21,7 +21,9 @@ import { EditPartyComponent } from './components/parties/edit-party/edit-party.c
 import { TypeaheadModule } from 'ngx-bootstrap';
 
 import fallback from 'express-history-api-fallback'
-import express from 'express'
+import express from 'express';
+import { CreateMonsterComponent } from './components/monsters/create-monster/create-monster.component';
+import { CustomMonstersComponent } from './components/monsters/custom-monsters/custom-monsters.component'
 
 @NgModule({
     declarations: [
@@ -35,7 +37,9 @@ import express from 'express'
         TrackerComponent,
         SpellsComponent,
         CreatePartyComponent,
-        EditPartyComponent
+        EditPartyComponent,
+        CreateMonsterComponent,
+        CustomMonstersComponent
     ],
     imports: [
         BrowserModule,
@@ -46,6 +50,8 @@ import express from 'express'
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'monsters', component: MonstersComponent },
+            { path: 'monsters/custom', component: CustomMonstersComponent },
+            { path: 'monsters/custom/create', component: CreateMonsterComponent },
             { path: 'encounter', component: EncounterComponent },
             { path: 'parties', component: PartiesComponent },
             { path: 'parties/new', component: CreatePartyComponent },

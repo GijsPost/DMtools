@@ -1,4 +1,4 @@
-﻿export interface Ability {
+﻿export class Ability {
     name: string;
     desc: string;
     attack_bonus: number;

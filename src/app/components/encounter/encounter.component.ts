@@ -36,7 +36,7 @@ export class EncounterComponent implements OnInit {
     public http: Http;
     public router: Router;
 
-    constructor(http: Http, router: Router, private resourceService: ResourceService) {
+    constructor(http: Http, router: Router, public resourceService: ResourceService) {
         this.http = http;
         this.router = router;
 
@@ -61,6 +61,12 @@ export class EncounterComponent implements OnInit {
     }
 
     initializeAfterLoad(){
+        if(this.resourceService.customMonsters.length > 0){
+            this.resourceService.customMonsters.forEach(mon=>{
+                this.monsters.push(mon);
+            });
+        }
+
         this.monsters.forEach(mon=>{
             this.monstersForQuery.push(mon.name);
         });
@@ -133,6 +139,21 @@ export class EncounterComponent implements OnInit {
         } else{
             console.error("Total list of entities is too large! Keep it smaller than 50 please :P");
         }
+    }
+
+    fileUpload(e) {
+        var input = e.target.files[0];
+        let fileReader = new FileReader();
+        fileReader.onload = (e) => {
+            var newMonsters = JSON.parse(fileReader.result) as Monster[];
+            if (newMonsters) {
+                newMonsters.map(mon => { mon.custom = true });
+                this.resourceService.customMonsters = newMonsters;
+                console.log(this.resourceService.customMonsters);
+            }
+        }
+
+        fileReader.readAsText(input);
     }
 
     switchAllies(){

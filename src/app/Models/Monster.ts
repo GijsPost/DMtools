@@ -1,6 +1,9 @@
 ﻿import { Ability } from "./Ability";
+import { StatusEffect } from "./StatusEffect";
 
-export interface Monster {
+export class Monster {
+
+    custom: boolean = false;
 
     name: string;
     size: string;
@@ -38,4 +41,6 @@ export interface Monster {
     actions: Ability[];
     special_abilities: Ability[];
     legendary_actions: Ability[];
+
+    conditions: StatusEffect[];
 }

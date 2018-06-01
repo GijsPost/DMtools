@@ -14,7 +14,7 @@ import { ResourceService } from '../../../services/resource.service';
 @Component({
     selector: 'tracker',
     templateUrl: './tracker.component.html',
-    styleUrls: ['./tracker.style.css']
+    styleUrls: ['./tracker.style.scss']
 })
 
 export class TrackerComponent {
@@ -67,6 +67,12 @@ export class TrackerComponent {
     }
 
     public initializeAfterLoad(){
+        if(this.resourceService.customMonsters.length > 0){
+            this.resourceService.customMonsters.forEach(mon=>{
+                this.monsters.push(mon);
+            });
+        }
+
         this.enemies = this.formulateEntities(this.encounter.enemies);
         this.allies = this.formulateEntities(this.encounter.allies);
     }
@@ -100,6 +106,8 @@ export class TrackerComponent {
                 entity.health_percentage = 1;
 
                 entityList.push(entity);
+            } else{
+                console.error("Entity '"+name+"' could not be found! Maybe it was a custom monster that is now deleted? Please make a new encounter.");
             }
         });
 

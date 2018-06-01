@@ -1,4 +1,6 @@
-﻿export interface PC {
+﻿import { StatusEffect } from "./StatusEffect";
+
+export interface PC {
     name: string;
     PCclass: string;
     level: number;
@@ -9,4 +11,6 @@
 
     initiative: any;
     id: any;
+
+    conditions: StatusEffect[];
 }

@@ -34,7 +34,8 @@ export class CreatePartyComponent implements OnInit {
       max_health: null,
       health_percentage: null,
       initiative: null,
-      id: this.uniqueID++
+      id: this.uniqueID++,
+      conditions: [],
     };
     this.party.party.push(newPC);
   }
