@@ -1,0 +1,38 @@
+.ng-valid[required], .ng-valid.required  {
+border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+border-left: 5px solid #a94442; /* red */
+}
+
+.form-group{
+    margin:2%;
+}
+.abil{
+    max-width: 12%;
+}
+.add-action{
+    opacity: 0.1;
+
+    &:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+}
+.delete-action{
+
+    margin:1%;
+    right: 1%;
+    position: absolute;
+    opacity:0.3;
+
+    &:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+}
+.card{
+    margin:2%;
+    padding:2%;
+}
