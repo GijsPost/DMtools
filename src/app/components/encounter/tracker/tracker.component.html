@@ -29,7 +29,7 @@
         </div>
         <div class="row"> 
             <div class="card creature" [ngClass]="['card creature', turn == pc ? 'selected' : '']" *ngFor="let pc of party;" [ngStyle]="{'background':'linear-gradient(#f4f4e7,rgba(224,144,133,' + (1 - pc.health_percentage) + '))'}">
-                <i class="fas fa-user fa-4x" style="text-align: center"></i>
+                <i class="fas fa-user fa-4x entity-icon" style="text-align: center"></i>
                 <h4 style="text-align: center">{{pc.name}}</h4>
                 <div style="padding-left:20%;">
                     <i class="fas fa-shield-alt" style="margin-right: 5px;"></i><b> {{pc.armor_class}}</b><br>
@@ -145,7 +145,3 @@
         </div>
     </div>
 </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

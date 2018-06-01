@@ -1,0 +1,29 @@
+.creature{
+    width: 170px;
+    height: 220px;
+    background-color: #f4f4e7;
+    margin:1%;
+}
+.turn{
+    min-width: 110px;
+    background-color: #e6e6e6;
+}
+.selected{
+    border:solid;
+    border-color:red;
+}
+.status-button{
+    opacity: 0.1;
+    margin-left: 5%;
+    margin-top: 5%;
+    position: absolute;
+
+    &:hover{
+        color:green;
+        opacity: 1;
+        cursor: pointer;
+    }
+}
+.entity-icon{
+    padding-top: 10%;
+}
