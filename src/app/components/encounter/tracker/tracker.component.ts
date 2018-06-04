@@ -49,7 +49,11 @@ export class TrackerComponent {
         
         this.encounter = this.resourceService.getLastEncounter(); 
 
-        this.party = this.resourceService.findParty(this.encounter.party).party;
+        if(this.resourceService.findParty(this.encounter.party)){
+            this.party = this.resourceService.findParty(this.encounter.party).party;
+        } else{
+            router.navigateByUrl("/encounter");
+        }
         this.party.forEach(member=>{
             member.initiative = null;
         });

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Party } from 'src/app/Models/Party';
-import { CookieService } from 'ngx-cookie';
 import { Monster } from 'src/app/Models/Monster';
 import { Spell } from 'src/app/Models/Spell';
 import { Encounter } from 'src/app/Models/Encounter';
@@ -16,7 +15,6 @@ export class ResourceService {
   public readonly API_LOCATION = "assets/repository";
   public readonly MONSTERS_PATH = this.API_LOCATION+"/monsters.json";
   public readonly SPELLS_PATH = this.API_LOCATION+"/spells.json";
-  public readonly CUSTOM_MONSTER_SERVER = "https://gijspost.nl/dmtools-api/getcustoms.php";
 
   public statusEffects: StatusEffect[] = [];
 
@@ -32,7 +30,7 @@ export class ResourceService {
     localStorage.setItem("customMonsters",JSON.stringify(monsters));
   }
 
-  constructor(private http: Http, private cookieService: CookieService) {
+  constructor(private http: Http) {
     this.statusEffects.push({
       name: "Blinded",
       effects: EnumStatusEffect.blinded,
@@ -92,40 +90,25 @@ export class ResourceService {
     );
   }
 
-  getActiveParty(): Party{
-    var cookie = this.cookieService.getObject("active_party_cookie");
-    if(cookie != null && cookie != undefined){
-      return cookie as Party;
-    } else{
-      return null;
-    } 
+  getActiveParty(): Party{    
+    return JSON.parse(localStorage.getItem("active_party")) as Party;
   }
 
   setActiveParty(party: Party){
-    if(party != null && party != undefined){
-      this.cookieService.putObject("active_party_cookie",party);
-      console.log("Succesfully set new active party");
-    } else{
-      this.cookieService.remove("active_party_cookie");
-    }
+    localStorage.setItem("active_party",JSON.stringify(party));
   }
 
   getParties(): Party[]{
-    var cookie = this.cookieService.getObject("saved_parties_cookie");
-    if(cookie != null && cookie != undefined){
-      return cookie as Party[];
+    const parties = JSON.parse(localStorage.getItem("saved_parties")) as Party[];
+    if(parties){
+      return parties;
     } else{
-      return null;
-    } 
+      return [];
+    }
   }
 
   submitParties(parties: Party[]){
-    if(parties != null && parties != undefined){
-      this.cookieService.putObject("saved_parties_cookie",parties);
-      console.log("successfully saved new party list");
-    } else{
-      console.error("Tried to save empty party list");
-    }
+    localStorage.setItem("saved_parties",JSON.stringify(parties));
   }
 
   findParty(name: string): Party{
@@ -133,27 +116,54 @@ export class ResourceService {
     var party = parties.find(query=>{
       return query.party_name == name;
     });
-    return party;
+    if(party){
+      return party;
+    } else{
+      return null;
+    }
   }
 
   getLastEncounter(): Encounter{
-    var cookie = this.cookieService.getObject("encounter_cookie");
-    if(cookie != null && cookie != undefined){   
-      return cookie as Encounter;
+    let encounters = this.getEncounters();
+    if(encounters != null){
+      return encounters[encounters.length - 1];
     } else{
+      console.error("No last encounter found m8");
       return null;
-    } 
+    }
+  }
+
+  getEncounters(): Encounter[]{
+    let encounters = JSON.parse(localStorage.getItem("saved_encounters")) as Encounter[];
+    if(encounters && encounters.length > 1){
+      encounters = encounters.sort((a,b)=>{
+        if(a.timestamp > b.timestamp){
+          return 1;
+        }
+        if(a.timestamp < b.timestamp){
+          return -1;
+        } else{
+          return 0;
+        }
+      });
+    } else{
+      if(encounters == null || encounters == undefined){
+        encounters = [];
+      }
+    }
+    return encounters;
   }
 
   addEncounter(encounter: Encounter): number{
+    let encounterArray: Encounter[] = this.getEncounters();
     if(encounter != null){
       if(this.getLastEncounter() != null){
         encounter.ID = this.getLastEncounter().ID + 1;
       } else{
         encounter.ID = 0;
       }
-      this.cookieService.putObject("encounter_cookie", encounter);
-      console.log("successfully saved new encounter");
+      encounterArray.push(encounter);
+      localStorage.setItem("saved_encounters",JSON.stringify(encounterArray));
       return encounter.ID;
     }
     return null;

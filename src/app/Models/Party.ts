@@ -1,6 +1,6 @@
 ﻿import { PC } from "./PC";
 
-export interface Party {
+export class Party {
     party: PC[];
     party_name: string;
 }
