@@ -129,7 +129,8 @@ export class EncounterComponent implements OnInit {
                     party: this.party.party_name,
                     enemies: this.enemies.map(en=>{ return en.name }),
                     allies: this.allies.map(al=>{ return al.name }),
-                    round: 0
+                    round: 0,
+                    timestamp: Date.now(),
                 }
     
                 this.redirect(this.resourceService.addEncounter(ec));
@@ -139,21 +140,6 @@ export class EncounterComponent implements OnInit {
         } else{
             console.error("Total list of entities is too large! Keep it smaller than 50 please :P");
         }
-    }
-
-    fileUpload(e) {
-        var input = e.target.files[0];
-        let fileReader = new FileReader();
-        fileReader.onload = (e) => {
-            var newMonsters = JSON.parse(fileReader.result) as Monster[];
-            if (newMonsters) {
-                newMonsters.map(mon => { mon.custom = true });
-                this.resourceService.customMonsters = newMonsters;
-                console.log(this.resourceService.customMonsters);
-            }
-        }
-
-        fileReader.readAsText(input);
     }
 
     switchAllies(){

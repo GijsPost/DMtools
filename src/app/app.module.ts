@@ -15,7 +15,6 @@ import { TrackerComponent } from './components/encounter/tracker/tracker.compone
 import { PartiesComponent } from './components/parties/parties.component';
 import { SpellsComponent } from './components/spells/spells.component';
 import { CreatePartyComponent } from './components/parties/create-party/create-party.component';
-import { CookieModule } from 'ngx-cookie';
 import { ResourceService } from './services/resource.service';
 import { EditPartyComponent } from './components/parties/edit-party/edit-party.component';
 import { TypeaheadModule } from 'ngx-bootstrap';
@@ -60,7 +59,6 @@ import { CustomMonstersComponent } from './components/monsters/custom-monsters/c
             { path: 'encounter/tracker', component: TrackerComponent },
             { path: '**', redirectTo: 'home' }
         ]),
-        CookieModule.forRoot(),
         TypeaheadModule.forRoot()
     ],
     providers: [ ResourceService ],

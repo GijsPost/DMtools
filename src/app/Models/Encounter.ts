@@ -8,5 +8,6 @@ export interface Encounter {
     enemies: string[];
     allies: string[];
     round: number;
+    timestamp: number;
 
 }
