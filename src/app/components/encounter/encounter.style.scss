@@ -1,5 +1,11 @@
+
 .start-button{
     -webkit-text-fill-color: white;
+    float:right;
+
+    &:disabled{
+        color: red;
+    }
 }
 .grayout{
     height:200px;

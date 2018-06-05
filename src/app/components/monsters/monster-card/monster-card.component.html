@@ -1,0 +1,90 @@
+<div class="card" style="margin: 3%; background-color:#fdfceb" *ngIf="monster != null || monster != undefined">
+  <div class="card-body">
+    <h3 class="card-title">{{ monster.name }}</h3>
+    <h4>
+      <i>{{ monster.size + " " + monster.type + " " + ((monster.subtype) ? monster.subtype : '') }} (CR {{ monster.challenge_rating
+        }})</i>
+    </h4>
+    <p>
+      <span class="badge badge-info">Strength {{ monster.strength + " ( " + (abc.get(monster.strength) > 0 ? '+' : '') + abc.get(monster.strength) + " )"
+        }}</span>
+      <span class="badge badge-info">Dexterity {{ monster.dexterity + " ( " + (abc.get(monster.dexterity) > 0 ? '+' : '') + abc.get(monster.dexterity) +
+        " )" }}</span>
+      <span class="badge badge-info">Constitution {{ monster.constitution + " ( " + (abc.get(monster.constitution) > 0 ? '+' : '') + abc.get(monster.constitution)
+        + " )"}}</span>
+      <span class="badge badge-info">Wisdom {{ monster.wisdom + " ( " + (abc.get(monster.wisdom) > 0 ? '+' : '') + abc.get(monster.wisdom) + " )" }}</span>
+      <span class="badge badge-info">Intelligence {{ monster.intelligence + " ( " + (abc.get(monster.intelligence) > 0 ? '+' : '') + abc.get(monster.intelligence)
+        + " )" }}</span>
+      <span class="badge badge-info">Charisma {{ monster.charisma + " ( " + (abc.get(monster.charisma) > 0 ? '+' : '') + abc.get(monster.charisma) +" )"
+        }}</span>
+    </p>
+    <hr />
+    <div class="row">
+      <div class="col-md">
+        <div *ngIf="monster.speed != ''">
+          <b>Speed</b>
+          <br /> {{ monster.speed }}
+        </div>
+        <div *ngIf="monster.senses != ''">
+          <b>Senses</b>
+          <br /> {{ monster.senses }}
+        </div>
+        <div *ngIf="monster.languages != ''">
+          <b>Languages</b>
+          <br /> {{ monster.languages }}
+        </div>
+      </div>
+      <div class="col-md">
+        <div *ngIf="monster.damage_vulnerabilities != ''">
+          <b>Vulnerabilities: </b>
+          <br /> {{ monster.damage_vulnerabilities }}
+        </div>
+        <div *ngIf="monster.damage_resistances != ''">
+          <b>Resistances: </b>
+          {{ monster.damage_resistances }}
+        </div>
+        <div *ngIf="monster.damage_immunities != ''">
+          <b>Immunities: </b>
+          {{ monster.damage_immunities + ", " + monster.condition_immunities}}
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div *ngIf="monster.special_abilities && monster.special_abilities.length > 0">
+      <h4>Special Abilities</h4>
+      <div *ngFor="let abil of monster.special_abilities">
+        <p>
+          <b>{{ abil.name }}</b>
+        </p>
+        <p>{{ abil.desc }}
+          <span class="badge badge-warning" *ngIf="action.attack_bonus">attack +{{ abil.attack_bonus }}</span>
+          <span class="badge badge-warning" *ngIf="action.attack_bonus">{{ abil.damage_dice }} +{{abil.damage_bonus != null ? abil.damage_bonus : '0'}}</span>
+        </p>
+      </div>
+      <hr />
+    </div>
+    <div *ngIf="monster.actions && monster.actions.length > 0">
+      <h4>Actions</h4>
+      <div *ngFor="let action of monster.actions">
+          <b>{{ action.name }}</b>
+        <p>
+          {{ action.desc }}
+          <span class="badge badge-warning" *ngIf="action.attack_bonus">attack +{{ action.attack_bonus }}</span>
+          <span class="badge badge-warning" *ngIf="action.attack_bonus">{{ action.damage_dice }} +{{action.damage_bonus != null ? action.damage_bonus : '0'}}</span>
+        </p>
+
+      </div>
+      <hr />
+    </div>
+    <div *ngIf="monster.legendary_actions && monster.legendary_actions.length > 0">
+      <h4>Legendary Actions</h4>
+      <div *ngFor="let legac of monster.legendary_actions">
+          <b>{{ legac.name }}</b>
+        <p>{{ legac.desc }}
+          <span class="badge badge-warning" *ngIf="action.attack_bonus">attack +{{ legac.attack_bonus }}</span>
+          <span class="badge badge-warning" *ngIf="action.attack_bonus">{{ legac.damage_dice }} +{{legac.damage_bonus != null ? legac.damage_bonus : '0'}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

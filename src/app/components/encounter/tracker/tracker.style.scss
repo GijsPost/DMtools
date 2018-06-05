@@ -1,12 +1,16 @@
 .creature{
     width: 170px;
-    height: 220px;
+    min-height: 220px;
     background-color: #f4f4e7;
     margin:1%;
 }
 .turn{
     min-width: 110px;
+    max-height: 60px;
     background-color: #e6e6e6;
+}
+h6{
+    margin-bottom: 0px;
 }
 .selected{
     border:solid;
@@ -25,5 +29,19 @@
     }
 }
 .entity-icon{
-    padding-top: 10%;
+    margin-top: 10%;
+}
+.change-stat-button{
+    padding: 0px;
+
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.monster{
+    height:70px;
+    width:70px;
 }

@@ -46,6 +46,7 @@ export class EditPartyComponent implements OnInit {
       hit_points: null,
       max_health: null,
       health_percentage: null,
+      passive_perception: null,
       initiative: null,
       id: this.uniqueID++,
       conditions: [],

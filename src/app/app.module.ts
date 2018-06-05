@@ -17,12 +17,15 @@ import { SpellsComponent } from './components/spells/spells.component';
 import { CreatePartyComponent } from './components/parties/create-party/create-party.component';
 import { ResourceService } from './services/resource.service';
 import { EditPartyComponent } from './components/parties/edit-party/edit-party.component';
-import { TypeaheadModule } from 'ngx-bootstrap';
+
+import { TypeaheadModule, PopoverModule  } from 'ngx-bootstrap';
 
 import fallback from 'express-history-api-fallback'
 import express from 'express';
 import { CreateMonsterComponent } from './components/monsters/create-monster/create-monster.component';
-import { CustomMonstersComponent } from './components/monsters/custom-monsters/custom-monsters.component'
+import { CustomMonstersComponent } from './components/monsters/custom-monsters/custom-monsters.component';
+import { EncounterListComponent } from './components/encounter/encounter-list/encounter-list.component';
+import { MonsterCardComponent } from './components/monsters/monster-card/monster-card.component'
 
 @NgModule({
     declarations: [
@@ -38,7 +41,9 @@ import { CustomMonstersComponent } from './components/monsters/custom-monsters/c
         CreatePartyComponent,
         EditPartyComponent,
         CreateMonsterComponent,
-        CustomMonstersComponent
+        CustomMonstersComponent,
+        EncounterListComponent,
+        MonsterCardComponent
     ],
     imports: [
         BrowserModule,
@@ -57,9 +62,12 @@ import { CustomMonstersComponent } from './components/monsters/custom-monsters/c
             { path: 'parties/edit/:party_name', component: EditPartyComponent},
             { path: 'spells', component: SpellsComponent },
             { path: 'encounter/tracker', component: TrackerComponent },
+            { path: 'encounter/tracker/:encounterID', component: TrackerComponent },
+            { path: 'encounter/list', component: EncounterListComponent },
             { path: '**', redirectTo: 'home' }
         ]),
-        TypeaheadModule.forRoot()
+        TypeaheadModule.forRoot(),
+        PopoverModule.forRoot(),
     ],
     providers: [ ResourceService ],
     bootstrap: [AppComponent],
