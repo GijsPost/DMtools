@@ -15,7 +15,7 @@ export class Monster {
     challenge_rating: string;
     number_cr: number;
 
-    language: string;
+    languages: string;
     senses: string;
 
     strength: number;

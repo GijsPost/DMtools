@@ -1,36 +1,46 @@
 <div class='main-nav bg-dark'>
-    <div class='navbar navigation'>
-        <div class='navbar-collapse'>
-            <!-- No fancy logo due to copyright issues :( -->
-            <img src="assets/images/original-logo.png">
-            <p>Version {{ version }}</p>
-            <div style="text-align:center">
-                <hr />
-                <h4 class="text-light" >Dice roller</h4>
-                <div class="row" style="margin-left:20%; margin-right:20%;">
-                    <div class="col-md" style="padding-left:0%; padding-right:0%;">
-                        <input class="form-control diceroller-field" type="text" #diceroller (keyup.enter)="roll(diceroller.value)" value="1d20"/>
-                    </div>
-                    <div class="col-md">
-                        <button type="button" class="btn btn-light text-dark" (click)="roll(diceroller.value)">Roll</button>
-                    </div>
-                    <div class="col-md" style="padding-left:0%; padding-right:0%;">
-                        <input readonly class="form-control diceroller-field" type="number" #output id="output" />
-                    </div>
+    <!-- No fancy logo due to copyright issues :( -->
+    <img class="logo d-none d-md-block d-lg-block" src="assets/images/original-logo.png">
+    <h2 class="title">D&D 5e DM Tools</h2>
+    <p style="margin:2%">© Gijs Post (2018) Version {{ version }}</p>
+    <div style="text-align:center">
+        <hr />
+        <div class="d-none d-lg-block">
+            <h4 class="text-light">Dice roller</h4>
+            <div class="row" style="margin-left:20%; margin-right:20%;">
+                <div class="col-md" style="padding-left:0%; padding-right:0%;">
+                    <input class="form-control diceroller-field" type="text" #diceroller (keyup.enter)="roll(diceroller.value)" value="1d20"
+                    />
                 </div>
-                <hr />
+                <div class="col-md roll-button">
+                    <button type="button" class="btn btn-light text-dark" (click)="roll(diceroller.value)">Roll</button>
+                </div>
+                <div class="col-md" style="padding-left:0%; padding-right:0%;">
+                    <input readonly class="form-control diceroller-field" type="number" #output id="output" />
+                </div>
             </div>
-            <div class='btn-group-vertical buttons'>
-                <button type="button" class="btn btn-light text-dark" [routerLink]="['/home']">Home</button>
-                <button type="button" class="btn btn-light text-dark" [routerLink]="['/parties']">Parties</button>
-                <button type="button" class="btn btn-light text-dark" [routerLink]="['/encounter']">Encounter Tracker</button>
-                <button type="button" class="btn btn-light text-dark" [routerLink]="['/monsters']">Monster List</button>
-                <button type="button" class="btn btn-light text-dark" [routerLink]="['/spells']">Spell List</button>
-            </div>
-            <div style="margin-top:4%;">
-                <h5>Active Party:</h5>
-                <i>{{activeParty}}</i>
-            </div>
+            <hr />
         </div>
+    </div>
+    <!-- On large -->
+    <div class='btn-group-vertical buttons d-none d-md-block'>
+        <button type="button" class="btn btn-light text-dark" [routerLink]="['/home']">Home</button>
+        <button type="button" class="btn btn-light text-dark" [routerLink]="['/parties']">Parties</button>
+        <button type="button" class="btn btn-light text-dark" [routerLink]="['/encounter']">Encounter Tracker</button>
+        <button type="button" class="btn btn-light text-dark" [routerLink]="['/monsters']">Monster List</button>
+        <button type="button" class="btn btn-light text-dark" [routerLink]="['/spells']">Spell List</button>
+    </div>
+    <!-- On small -->
+    <div class='btn-group buttons d-block d-md-none'>
+        <button type="button" class="btn rounded btn-light text-dark" [routerLink]="['/home']">Home</button>
+        <button type="button" class="btn rounded btn-light text-dark" [routerLink]="['/parties']">Parties</button>
+        <button type="button" class="btn rounded btn-light text-dark" [routerLink]="['/encounter']">Encounter Tracker</button>
+        <button type="button" class="btn rounded btn-light text-dark" [routerLink]="['/monsters']">Monster List</button>
+        <button type="button" class="btn rounded btn-light text-dark" [routerLink]="['/spells']">Spell List</button>
+    </div>
+
+    <div class="active-party">
+        <h5>Active Party:</h5>
+        <i>{{activeParty}}</i>
     </div>
 </div>
