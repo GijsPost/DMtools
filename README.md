@@ -18,10 +18,7 @@ LIVE DEMO: <a href="https://gijspost.nl/dmtools">https://gijspost.nl/dmtools</a>
     <li>Multiple party set-ups that are importable and exportable</li>
     <li>A neat little dice roller in the sidebar that works on user-specified input, like '1d20' or even '40d100'</li>
 </ul> 
-<h6>Disclaimer</h6>
-<i>D&D 5e DM Tools is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.</i><br>
-<i>All rules, monsters, and spells in this app are part of the <a href="https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf">D&D 5e SRD and licensed under the Open Gaming License (OGL)</a>.</i><br>
-<i>The logo and other images used in this app are from <a href="http://game-icons.net">game-icons.net</a> and licensed under CC BY 3.0.</i><br>
+
 <b>How to install</b>
 <ul>
     <li>Download or Clone this repo.</li>
@@ -33,3 +30,8 @@ LIVE DEMO: <a href="https://gijspost.nl/dmtools">https://gijspost.nl/dmtools</a>
 </ul> 
 <b>Notes</b>
 <p>If the application is hard to run and you don't understand it, i'm sorry. Perhaps it is best if you have some experience with running angular projects when using this app. You can use the live demo online on my domain, but i cannot guarantee full up-time and latest releases. That said, the app doesn't use an api, it loads its two main data files (monsters.json / spells.json) from the assets folder. Maybe when I put this app online somewhere I will link an api to it, so I can remotely update the monster database. This web app is not optimalized for mobile (yet) so I highly recommend using a normal desktop browser.</p>
+
+<b>Disclaimer</b>
+<i>D&D 5e DM Tools is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.</i><br>
+<i>All rules, monsters, and spells in this app are part of the <a href="https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf">D&D 5e SRD and licensed under the Open Gaming License (OGL)</a>.</i><br>
+<i>The logo and other images used in this app are from <a href="http://game-icons.net">game-icons.net</a> and licensed under CC BY 3.0.</i><br>
