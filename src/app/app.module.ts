@@ -25,7 +25,8 @@ import express from 'express';
 import { CreateMonsterComponent } from './components/monsters/create-monster/create-monster.component';
 import { CustomMonstersComponent } from './components/monsters/custom-monsters/custom-monsters.component';
 import { EncounterListComponent } from './components/encounter/encounter-list/encounter-list.component';
-import { MonsterCardComponent } from './components/monsters/monster-card/monster-card.component'
+import { MonsterCardComponent } from './components/monsters/monster-card/monster-card.component';
+import { PrivacyNoticeComponent } from './components/privacy-notice/privacy-notice.component'
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { MonsterCardComponent } from './components/monsters/monster-card/monster
         CreateMonsterComponent,
         CustomMonstersComponent,
         EncounterListComponent,
-        MonsterCardComponent
+        MonsterCardComponent,
+        PrivacyNoticeComponent
     ],
     imports: [
         BrowserModule,
@@ -53,6 +55,7 @@ import { MonsterCardComponent } from './components/monsters/monster-card/monster
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
+            { path: 'privacy-policy', component: PrivacyNoticeComponent },
             { path: 'monsters', component: MonstersComponent },
             { path: 'monsters/custom', component: CustomMonstersComponent },
             { path: 'monsters/custom/create', component: CreateMonsterComponent },
