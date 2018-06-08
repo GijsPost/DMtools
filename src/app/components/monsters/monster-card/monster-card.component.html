@@ -57,8 +57,8 @@
           <b>{{ abil.name }}</b>
         </p>
         <p>{{ abil.desc }}
-          <span class="badge badge-warning" *ngIf="action.attack_bonus">attack +{{ abil.attack_bonus }}</span>
-          <span class="badge badge-warning" *ngIf="action.attack_bonus">{{ abil.damage_dice }} +{{abil.damage_bonus != null ? abil.damage_bonus : '0'}}</span>
+          <span class="badge badge-warning" *ngIf="abil.attack_bonus">attack +{{ abil.attack_bonus != null ? abil.attack_bonus : '0' }}</span>
+          <span class="badge badge-warning" *ngIf="abil.attack_bonus">{{ abil.damage_dice }} +{{abil.damage_bonus != null ? abil.damage_bonus : '0'}}</span>
         </p>
       </div>
       <hr />
@@ -81,8 +81,8 @@
       <div *ngFor="let legac of monster.legendary_actions">
           <b>{{ legac.name }}</b>
         <p>{{ legac.desc }}
-          <span class="badge badge-warning" *ngIf="action.attack_bonus">attack +{{ legac.attack_bonus }}</span>
-          <span class="badge badge-warning" *ngIf="action.attack_bonus">{{ legac.damage_dice }} +{{legac.damage_bonus != null ? legac.damage_bonus : '0'}}</span>
+          <span class="badge badge-warning" *ngIf="legac.attack_bonus">attack +{{ legac.attack_bonus }}</span>
+          <span class="badge badge-warning" *ngIf="legac.attack_bonus">{{ legac.damage_dice }} +{{legac.damage_bonus != null ? legac.damage_bonus : '0'}}</span>
         </p>
       </div>
     </div>

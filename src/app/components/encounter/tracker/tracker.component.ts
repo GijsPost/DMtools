@@ -33,6 +33,10 @@ export class TrackerComponent{
 
     public monsters: Monster[];
 
+    public enemyToAdd: string;
+    public allyToAdd: string;
+    public monstersForQuery: string[] = [];
+
     public router: Router;
     public dr: DiceRoller = new DiceRoller;
     public abc: AbilityBonusCalculator = new AbilityBonusCalculator;
@@ -81,6 +85,10 @@ export class TrackerComponent{
                 this.monsters.push(mon);
             });
         }
+
+        this.monsters.forEach(mon=>{
+            this.monstersForQuery.push(mon.name);
+        });
 
         this.enemies = this.formulateEntities(this.encounter.enemies);
         this.allies = this.formulateEntities(this.encounter.allies);
@@ -207,6 +215,24 @@ export class TrackerComponent{
             return newMonster;
         } else{
             return null;
+        }
+    }
+
+    public submitAddEnemy(init: number, amount: number){
+        for(let i = 0; i < amount; i++){
+            if(this.enemyToAdd){
+                const enemy = this.monsters.find(e=>{
+                    return e.name == this.enemyToAdd;
+                });
+                this.enemyToAdd = undefined;
+                enemy.initiative = init;
+                enemy.max_health = enemy.hit_points;
+                enemy.health_percentage = 1;
+
+                this.encounter.enemies.push(enemy.name);
+                this.enemies = this.formulateEntities(this.encounter.enemies);
+                this.turnTracker.addEntity(enemy);
+            }
         }
     }
 

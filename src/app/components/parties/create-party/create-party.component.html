@@ -47,7 +47,7 @@
 
             <div *ngIf="party.party.length <= 0">
                 <p>Upload or Drop Party JSON file here (if you have one):</p>
-                <input class="import-field" type="file" (change)="fileUpload($event)" id="fileDrop" />
+                <input class="import-field" type="file" accept=".party" (change)="fileUpload($event)" id="fileDrop" />
             </div>
       </div>
  

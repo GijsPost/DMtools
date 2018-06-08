@@ -20,8 +20,36 @@
     <button class="btn btn-primary" (click)="startTracker()">Start</button>
 </div>
 <ng-template #turnswitch>
-    <div style="text-align:center">
-        <button class="btn btn-primary" (click)="nextTurn()">Next turn</button>
+    <div class="row">
+        <div style="margin:auto;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Add Ally</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <i>Not yet implemented, check back later</i>
+            </div>
+        </div>
+        <button class="btn btn-primary" (click)="nextTurn()" style="padding-left:2rem; padding-right:2rem; margin:auto;">Next turn</button>
+        <div style="margin:auto;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Add enemy</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="row" (ngSubmit)="submitAddEnemy(init.value, amount.value)" #addEnemyForm="ngForm">
+                    <div class="addmonstercol col-lg-4">
+                        <input #query name="query" id="query" placeholder="Search..." required [(ngModel)]="enemyToAdd" [typeahead]="monstersForQuery"
+                            class="form-control">
+                    </div>
+                    <div class="addmonstercol col-lg-3">
+                        <input #amount type="number" class="form-control" name="amount" id="amount" placeholder="Amount" value=1>
+                    </div>
+                    <div class="addmonstercol col-lg-3">
+                        <input #init type="number" class="form-control" name="init" id="init" placeholder="Initiative" required>
+                    </div>
+                    <div class="addmonstercol col-lg-2">
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </ng-template>
 <hr>
@@ -34,7 +62,7 @@
         </div>
         <div class="row">
             <div class="card creature" [ngClass]="['card creature', turn == pc ? 'selected' : '']" *ngFor="let pc of party;" [ngStyle]="{'background':'rgba(224,144,133,' + (1 - pc.health_percentage) + ')'}">
-                <i class="fas fa-user fa-4x entity-icon" style="text-align: center"></i>
+                <img src="assets/images/swordman.svg" class="entity-icon" style="text-align: center">
                 <h4 style="text-align: center">{{pc.name}}</h4>
                 <h6 style="text-align: center">
                     <i>{{pc.PCclass + ' level ' + pc.level}}</i>
@@ -96,7 +124,7 @@
             </div>
             <div [ngClass]="['card creature', turn == ally ? 'selected' : '']" *ngFor="let ally of allies" (click)="showMonster(ally)"
                 [ngStyle]="{'background':'rgba(224,144,133,' + (1 - ally.health_percentage) + ')'}">
-                <i class="fas fa-user fa-4x entity-icon" style="text-align: center"></i>
+                <img src="assets/images/ally-minion.svg" class="entity-icon">
                 <h4 style="text-align: center">{{ally.name}}</h4>
                 <h6 style="text-align: center">
                     <i>{{ally.type + ' CR ' + ally.challenge_rating}}</i>
@@ -169,7 +197,7 @@
         <div class="row">
             <div class="card creature" [ngClass]="['card creature', turn == enemy ? 'selected' : '']" *ngFor="let enemy of enemies" (click)="showMonster(enemy)"
                 [ngStyle]="{'background':'rgba(224,144,133,' + (1 - enemy.health_percentage) + ')'}">
-                <img src="assets/images/enemyIcon.png" class="entity-icon monster" style="display: block; margin: 0 auto;">
+                <img src="assets/images/enemy-minion.svg" class="entity-icon">
                 <h5 style="text-align: center">{{enemy.name}}</h5>
                 <h6 style="text-align: center">
                     <i>{{enemy.type + ' CR ' + enemy.challenge_rating}}</i>

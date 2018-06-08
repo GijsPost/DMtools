@@ -29,7 +29,10 @@ h6{
     }
 }
 .entity-icon{
+    margin:auto;
     margin-top: 10%;
+    height:100px;
+    width:100px;
 }
 .change-stat-button{
     padding: 0px;
@@ -41,7 +44,11 @@ h6{
     overflow: hidden;
     outline:none;
 }
-.monster{
-    height:70px;
-    width:70px;
+.dropdown-menu{
+    padding:1%;
+    background-color: #ececec;
+    width:50%;
+}
+.addmonstercol{
+    padding:10px;
 }

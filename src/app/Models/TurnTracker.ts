@@ -30,6 +30,13 @@ export class TurnTracker{
 
     }
 
+    public addEntity(entity: Monster | PC){
+        this.list.push(entity);
+        this.list.sort((a: PC | Monster, b: PC | Monster) => {
+            return b.initiative - a.initiative;
+        });
+    }
+
     public findNextTurn(): PC | Monster {
         var next = this.list[this.list.indexOf(this.currentTurn) + 1];
         if (next != null && next != undefined && (this.list.indexOf(this.currentTurn) + 1) <= this.list.length) {
