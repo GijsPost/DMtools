@@ -1,0 +1,21 @@
+<h1>Saved Encounters</h1>
+<hr>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Party</th>
+      <th>Enemies</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let encounter of savedEncounters">
+      <td>{{ formatDate(encounter.timestamp) }}</td>
+      <td>{{ encounter.party }}</td>
+      <td>{{ formatEnemies(encounter.enemies) }}</td>
+      <td><button type="button" class="btn btn-primary" routerLink="/encounter/tracker/{{encounter.ID}}">Play/Continue</button></td>
+      <td><button type="button" class="btn btn-danger">Delete</button></td>
+    </tr>
+  </tbody>
+</table>

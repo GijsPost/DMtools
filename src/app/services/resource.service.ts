@@ -133,6 +133,12 @@ export class ResourceService {
     }
   }
 
+  findEncounter(id: number): Encounter{
+    return this.getEncounters().find(enc=>{
+      return enc.ID == id;
+    });
+  }
+
   getEncounters(): Encounter[]{
     let encounters = JSON.parse(localStorage.getItem("saved_encounters")) as Encounter[];
     if(encounters && encounters.length > 1){

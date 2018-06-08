@@ -1,7 +1,12 @@
 <h1>D&D 5e Encounter Tracker</h1>
 
 <p>Manage your encounters</p>
-<hr />
+<hr>
+<div>
+    <a role="button" class="btn btn-success start-button" (click)="encounterCreate()" [ngClass]="(noActivePartySet || enemies.length <= 0 || tooManyEntities) ? 'btn-danger disabled' : ''">Start Encounter <i class="fas fa-play"></i></a>
+    <button type="button" class="btn btn-primary" routerLink="/encounter/list">See previous encounters</button>
+</div>
+<hr>
 
 <div class="row">
     <div class="col-md">
@@ -95,7 +100,6 @@
             </table>
         </div>
 
-        <a role="button" class="btn btn-primary start-button" (click)="encounterCreate()" [ngClass]="(noActivePartySet || enemies.length <= 0 || tooManyEntities) ? 'disabled' : ''">Start Encounter</a>
     </div>
     <div class="col-md">
         <h4>Enemies</h4>

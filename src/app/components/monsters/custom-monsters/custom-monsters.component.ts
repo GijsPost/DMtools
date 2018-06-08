@@ -23,7 +23,7 @@ export class CustomMonstersComponent implements OnInit {
       var exportName = "CustomMonsters";
       var downloadAnchorNode = document.createElement('a');
       downloadAnchorNode.setAttribute("href", dataStr);
-      downloadAnchorNode.setAttribute("download", exportName + ".json");
+      downloadAnchorNode.setAttribute("download", exportName + ".monsters");
       document.body.appendChild(downloadAnchorNode); // required for firefox
       downloadAnchorNode.click();
       downloadAnchorNode.remove();

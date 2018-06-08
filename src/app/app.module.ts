@@ -17,12 +17,16 @@ import { SpellsComponent } from './components/spells/spells.component';
 import { CreatePartyComponent } from './components/parties/create-party/create-party.component';
 import { ResourceService } from './services/resource.service';
 import { EditPartyComponent } from './components/parties/edit-party/edit-party.component';
-import { TypeaheadModule } from 'ngx-bootstrap';
+
+import { TypeaheadModule, PopoverModule  } from 'ngx-bootstrap';
 
 import fallback from 'express-history-api-fallback'
 import express from 'express';
 import { CreateMonsterComponent } from './components/monsters/create-monster/create-monster.component';
-import { CustomMonstersComponent } from './components/monsters/custom-monsters/custom-monsters.component'
+import { CustomMonstersComponent } from './components/monsters/custom-monsters/custom-monsters.component';
+import { EncounterListComponent } from './components/encounter/encounter-list/encounter-list.component';
+import { MonsterCardComponent } from './components/monsters/monster-card/monster-card.component';
+import { PrivacyNoticeComponent } from './components/privacy-notice/privacy-notice.component'
 
 @NgModule({
     declarations: [
@@ -38,7 +42,10 @@ import { CustomMonstersComponent } from './components/monsters/custom-monsters/c
         CreatePartyComponent,
         EditPartyComponent,
         CreateMonsterComponent,
-        CustomMonstersComponent
+        CustomMonstersComponent,
+        EncounterListComponent,
+        MonsterCardComponent,
+        PrivacyNoticeComponent
     ],
     imports: [
         BrowserModule,
@@ -48,6 +55,7 @@ import { CustomMonstersComponent } from './components/monsters/custom-monsters/c
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
+            { path: 'privacy-policy', component: PrivacyNoticeComponent },
             { path: 'monsters', component: MonstersComponent },
             { path: 'monsters/custom', component: CustomMonstersComponent },
             { path: 'monsters/custom/create', component: CreateMonsterComponent },
@@ -57,9 +65,12 @@ import { CustomMonstersComponent } from './components/monsters/custom-monsters/c
             { path: 'parties/edit/:party_name', component: EditPartyComponent},
             { path: 'spells', component: SpellsComponent },
             { path: 'encounter/tracker', component: TrackerComponent },
+            { path: 'encounter/tracker/:encounterID', component: TrackerComponent },
+            { path: 'encounter/list', component: EncounterListComponent },
             { path: '**', redirectTo: 'home' }
         ]),
-        TypeaheadModule.forRoot()
+        TypeaheadModule.forRoot(),
+        PopoverModule.forRoot(),
     ],
     providers: [ ResourceService ],
     bootstrap: [AppComponent],

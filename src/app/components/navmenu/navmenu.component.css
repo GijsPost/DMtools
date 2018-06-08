@@ -1,38 +1,61 @@
 
 /* Keep the nav menu independent of scrolling and on top of other items */
 .main-nav {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1;
-}
-.navigation{
     text-align: center;
-    margin: auto;
     -webkit-text-fill-color: white;
 }
+.navbar-text{
+    margin-bottom:1%;
+    padding-bottom:1%;
+}
+.buttons{
+    -webkit-text-fill-color: black;
+}
+.title{
+    padding-top: 5%;
+}  
 
 @media (min-width: 768px) {
     /* On small screens, convert the nav menu to a vertical sidebar */
     .main-nav {
+        position: fixed;
         height: 100%;
         width: calc(25%);
     }
-    .navbar {
-        border-radius: 0px;
-        border-width: 0px;
-        height: 100%;
-    }
     .buttons{
         -webkit-text-fill-color: black;
+        margin-left:20%;
+        margin-right:20%;
     }
     .btn{
         margin-bottom:5px;
         -webkit-text-fill-color: black;
     }
+    .roll-button{
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+    .title{
+        margin-top: 0%;
+    }
     .diceroller-field{
         width: 100%;
         -webkit-text-fill-color: black;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .active-party{
+        padding: 4%;
+    }
+    .logo{
+        margin: auto;
+        padding-top:10%;
+        height:200px;
+        width:200px;
     }
 }

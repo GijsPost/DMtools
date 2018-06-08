@@ -14,6 +14,7 @@
                       <th style="width: 30%;">Class & Level</th>
                       <th>AC</th>
                       <th>HP</th>
+                      <th>PP</th>
                   </tr>            
               </thead>
               <tbody>
@@ -29,8 +30,9 @@
                       </td>
                       <td><input type="number" class="form-control number" id="PCac{{pc.id}}" required [(ngModel)]="pc.armor_class" placeholder="Armor Class" name="PCac{{pc.id}}"></td>
                       <td><input type="number" class="form-control number" id="PChp{{pc.id}}" required [(ngModel)]="pc.hit_points" placeholder="Max Hitpoints" name="PChp{{pc.id}}"></td>
+                      <td><input type="number" class="form-control number" id="PCpp{{pc.id}}" required [(ngModel)]="pc.passive_perception" placeholder="Passive Perception" name="PCpp{{pc.id}}"></td>
                       <td><i class="fas fa-times-circle fa-2x delete-icon" (click)="removePC(pc)"></i></td>
-                  </tr>
+                    </tr>
                   <tr>
                       <td>
                         <button type="button" class="btn btn-primary" (click)="newMember()">Add new party member</button>
@@ -45,7 +47,7 @@
 
             <div *ngIf="party.party.length <= 0">
                 <p>Upload or Drop Party JSON file here (if you have one):</p>
-                <input class="import-field" type="file" (change)="fileUpload($event)" id="fileDrop" />
+                <input class="import-field" type="file" accept=".party" (change)="fileUpload($event)" id="fileDrop" />
             </div>
       </div>
  

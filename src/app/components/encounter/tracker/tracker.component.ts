@@ -17,7 +17,7 @@ import { ResourceService } from '../../../services/resource.service';
     styleUrls: ['./tracker.style.scss']
 })
 
-export class TrackerComponent {
+export class TrackerComponent{
     public party: PC[] = [];
     public enemies: Monster[] = [];
     public allies: Monster[] = [];
@@ -33,6 +33,10 @@ export class TrackerComponent {
 
     public monsters: Monster[];
 
+    public enemyToAdd: string;
+    public allyToAdd: string;
+    public monstersForQuery: string[] = [];
+
     public router: Router;
     public dr: DiceRoller = new DiceRoller;
     public abc: AbilityBonusCalculator = new AbilityBonusCalculator;
@@ -43,11 +47,16 @@ export class TrackerComponent {
 
         this.http.get(resourceService.MONSTERS_PATH).subscribe(result => {
             this.monsters = result.json() as Monster[];
-
+            console.log(this.monsters[34]);
+            
             this.initializeAfterLoad();
         }, error => console.error(error));
         
-        this.encounter = this.resourceService.getLastEncounter(); 
+        this.encounterID = +route.snapshot.params['encounterID'];
+        this.encounter = this.resourceService.findEncounter(this.encounterID);
+        if(!this.encounter){
+            this.encounter = this.resourceService.getLastEncounter();
+        }
 
         if(this.resourceService.findParty(this.encounter.party)){
             this.party = this.resourceService.findParty(this.encounter.party).party;
@@ -76,6 +85,10 @@ export class TrackerComponent {
                 this.monsters.push(mon);
             });
         }
+
+        this.monsters.forEach(mon=>{
+            this.monstersForQuery.push(mon.name);
+        });
 
         this.enemies = this.formulateEntities(this.encounter.enemies);
         this.allies = this.formulateEntities(this.encounter.allies);
@@ -155,30 +168,18 @@ export class TrackerComponent {
         var emptyError = false;
 
         for (var i = 0; i < this.party.length; i++) {
-            var input = (<HTMLInputElement>document.getElementById("init-"+this.party[i].name)).value; 
-            if (input) {
-                this.party[i].initiative = +input;
-            }
             if (!this.party[i].initiative || this.party[i].initiative == 0) {
-                emptyError = true;
+                this.party[i].initiative = 10
             }
         }
         for (var i = 0; i < this.enemies.length; i++) {
-            var input = (<HTMLInputElement>document.getElementById("init-"+this.enemies[i].name)).value; 
-            if (input) {
-                this.enemies[i].initiative = +input;
-            }
             if (!this.enemies[i].initiative || this.enemies[i].initiative == 0) {
-                emptyError = true;
+                this.enemies[i].initiative = 10
             }
         }
         for (var i = 0; i < this.allies.length; i++) {
-            var input = (<HTMLInputElement>document.getElementById("init-"+this.allies[i].name)).value; 
-            if (input) {
-                this.allies[i].initiative = +input;
-            }
             if (!this.allies[i].initiative || this.allies[i].initiative == 0) {
-                emptyError = true;
+                this.allies[i].initiative = 10
             }
         }
         if (!emptyError) {
@@ -216,4 +217,23 @@ export class TrackerComponent {
             return null;
         }
     }
+
+    public submitAddEnemy(init: number, amount: number){
+        for(let i = 0; i < amount; i++){
+            if(this.enemyToAdd){
+                const enemy = this.monsters.find(e=>{
+                    return e.name == this.enemyToAdd;
+                });
+                this.enemyToAdd = undefined;
+                enemy.initiative = init;
+                enemy.max_health = enemy.hit_points;
+                enemy.health_percentage = 1;
+
+                this.encounter.enemies.push(enemy.name);
+                this.enemies = this.formulateEntities(this.encounter.enemies);
+                this.turnTracker.addEntity(enemy);
+            }
+        }
+    }
+
 }

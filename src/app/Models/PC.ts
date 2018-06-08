@@ -8,6 +8,7 @@ export interface PC {
     hit_points: number;
     max_health: number;
     health_percentage: number;
+    passive_perception: number;
 
     initiative: any;
     id: any;
