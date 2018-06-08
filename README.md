@@ -1,6 +1,6 @@
 # D&amp;D 5e DM tools
 <div style="text-align: center">
-<img src="src/assets/images/logo.svg" width="150px" height="150px">
+<img src="src/assets/images/logo-black.svg" width="150px" height="150px">
 </div>
 
 <b>What is this?</b>
